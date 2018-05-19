@@ -1,1 +1,1 @@
-#SELECT * FROM employee_start;
+SELECT * FROM employee_start;
