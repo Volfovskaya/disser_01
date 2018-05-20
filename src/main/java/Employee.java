@@ -1,13 +1,13 @@
 public class Employee {
-    int employee_id;
+    private int employee_id;
 
     private String employee_name;
-    String employee_birth;
-    String employee_position;
+    private String employee_birth;
+    private String employee_position;
 
-    String employee_pc5;
-    String employee_pc6;
-    String employee_pc15;
+    private String employee_pc5;
+    private String employee_pc6;
+    private String employee_pc15;
 
     public int getEmployee_id() {
         return employee_id;
