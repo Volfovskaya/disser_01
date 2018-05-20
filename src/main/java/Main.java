@@ -1,5 +1,3 @@
-import com.mysql.fabric.jdbc.FabricMySQLDriver;
-
 import java.sql.*;
 import java.util.ArrayList;
 
