@@ -13,21 +13,24 @@ public class Main {
 
         try {
             Statement statement = dbWorker.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM employee_start");
+            ResultSet resultSetEmployee = statement.executeQuery("SELECT * FROM employee_start");
+            statement = dbWorker.getConnection().createStatement();
+            ResultSet resultSetCourse = statement.executeQuery("SELECT * FROM course");
+
 
 
             arrayListEmployee.add(new Employee());
             arrayListEmployee.add(new Employee());
-            int i = 0;
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("employee_id");
+
+            while (resultSetEmployee.next()) {
+                int id = resultSetEmployee.getInt("employee_id");
                 System.out.println(id);
 
-                String str = resultSet.getString("employee_name");
+                String str = resultSetEmployee.getString("employee_name");
                 System.out.println(str);
 
-                Date date = resultSet.getDate("employee_birth");
+                Date date = resultSetEmployee.getDate("employee_birth");
                 System.out.println(date);
 
 
@@ -37,7 +40,6 @@ public class Main {
 
 
 
-            dbWorker.getConnection().close();
 
         } catch (SQLException e) {
             e.printStackTrace();
