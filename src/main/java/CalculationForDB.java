@@ -103,7 +103,6 @@ public class CalculationForDB {
     }
 
     private static void insertEffect(DBWorker dbWorker) throws SQLException {
-
         PreparedStatement preparedStatementInsertEffect = dbWorker.getConnection()
                 .prepareStatement("INSERT INTO effect(course_id, employee_id, effect) " +
                         "VALUE (?,?,?)");
@@ -122,6 +121,27 @@ public class CalculationForDB {
         preparedStatement.setInt(3, employee_id);
     }
 
+    private static void insertEmployeeEnd(DBWorker dbWorker) throws SQLException {
+        PreparedStatement preparedStatementInsertEmployeeEnd = dbWorker.getConnection()
+                .prepareStatement("INSERT INTO employee_end(employee_id, employee_pc5, employee_pc6, employee_pc15) " +
+                        "VALUE (?,?,?,?)");
+        preparedStatementInsertEmployeeEnd.setInt(1, employee_id);
+        preparedStatementInsertEmployeeEnd.setInt(2, pc5Employee);
+        preparedStatementInsertEmployeeEnd.setInt(3, pc6Employee);
+        preparedStatementInsertEmployeeEnd.setInt(4, pc15Employee);
+        preparedStatementInsertEmployeeEnd.executeUpdate();
+    }
+
+    private static void insertVisitation(DBWorker dbWorker) throws SQLException {
+        PreparedStatement preparedStatementInsertVisitation = dbWorker.getConnection()
+                .prepareStatement("INSERT INTO visitation(course_id, employee_id, visitation_order) " +
+                        "VALUE (?,?,?)");
+        preparedStatementInsertVisitation.setInt(1, course_id);
+        preparedStatementInsertVisitation.setInt(2, employee_id);
+        preparedStatementInsertVisitation.setInt(3, number + 1);
+        preparedStatementInsertVisitation.executeUpdate();
+    }
+
     public static void planMaker(DBWorker dbWorker, int maxBudget, int maxNumberOnCourse, int maxNumber) {
         try {
             while (budget < maxBudget & numberOnCourse < maxNumberOnCourse & number < maxNumber) {
@@ -136,10 +156,11 @@ public class CalculationForDB {
                 effect = resultSetMaxEffect.getDouble("MAX(effect)");
 
                 if (effect == 0) {
-                    break;
+                    System.out.println("Максимальный эффект равен 0");
+                    return;
                 }
 
-                String queryMaxCourse = "SELECT course_pc5_end, course_pc6_end, course_pc15_end " +
+                String queryMaxCourse = "SELECT course_pc5_end, course_pc6_end, course_pc15_end, course_price " +
                         "FROM course WHERE course_id = " + course_id;
                 statement = dbWorker.getConnection().createStatement();
                 ResultSet resultSetMaxCourse = statement.executeQuery(queryMaxCourse);
@@ -149,6 +170,9 @@ public class CalculationForDB {
                 pc6EndCourse = resultSetMaxCourse.getInt("course_pc6_end");
                 pc15EndCourse = resultSetMaxCourse.getInt("course_pc15_end");
 
+                price = resultSetMaxCourse.getInt("course_price");
+                budget = budget + price;
+
                 pc5Employee = pc5EndCourse;
                 pc6Employee = pc6EndCourse;
                 pc15Employee = pc15EndCourse;
@@ -156,22 +180,8 @@ public class CalculationForDB {
                 System.out.println("Курс " + course_id);
                 System.out.println("Значения курса: " + " " + pc5EndCourse + pc6EndCourse + pc15EndCourse);
 
-                PreparedStatement preparedStatementInsertEmployeeEnd = dbWorker.getConnection()
-                        .prepareStatement("INSERT INTO employee_end(employee_id, employee_pc5, employee_pc6, employee_pc15) " +
-                                "VALUE (?,?,?,?)");
-                preparedStatementInsertEmployeeEnd.setInt(1, employee_id);
-                preparedStatementInsertEmployeeEnd.setInt(2, pc5Employee);
-                preparedStatementInsertEmployeeEnd.setInt(3, pc6Employee);
-                preparedStatementInsertEmployeeEnd.setInt(4, pc15Employee);
-                preparedStatementInsertEmployeeEnd.executeUpdate();
-
-                PreparedStatement preparedStatementInsertVisitation = dbWorker.getConnection()
-                        .prepareStatement("INSERT INTO visitation(course_id, employee_id, visitation_order) " +
-                        "VALUE (?,?,?)");
-                preparedStatementInsertVisitation.setInt(1, course_id);
-                preparedStatementInsertVisitation.setInt(2, employee_id);
-                preparedStatementInsertVisitation.setInt(3, number + 1);
-                preparedStatementInsertVisitation.executeUpdate();
+                insertEmployeeEnd(dbWorker);
+                insertVisitation(dbWorker);
 
                 // TODO
 
@@ -215,7 +225,6 @@ public class CalculationForDB {
 
 
 
-                budget++;
                 numberOnCourse++;
                 number++;
             }
