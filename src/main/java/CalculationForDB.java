@@ -209,21 +209,7 @@ public class CalculationForDB {
 
                     updateEffect(dbWorker);
                     System.out.println(course_name + ": эффект за курс " + effect); // fixme later
-
-
                 }
-
-
-
-
-
-
-
-
-
-
-
-
 
                 numberOnCourse++;
                 number++;
