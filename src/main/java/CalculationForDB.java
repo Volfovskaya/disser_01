@@ -128,6 +128,44 @@ public class CalculationForDB {
                 employee_id = resultSetMaxEffect.getInt("employee_id");
                 effect = resultSetMaxEffect.getDouble("MAX(effect)");
 
+                if (effect == 0) {
+                    break;
+                }
+
+                String queryMaxCourse = "SELECT course_pc5_end, course_pc6_end, course_pc15_end " +
+                        "FROM course WHERE course_id = " + course_id;
+                statement = dbWorker.getConnection().createStatement();
+                ResultSet resultSetMaxCourse = statement.executeQuery(queryMaxCourse);
+
+                resultSetMaxCourse.next();
+                pc5EndCourse = resultSetMaxCourse.getInt("course_pc5_end");
+                pc6EndCourse = resultSetMaxCourse.getInt("course_pc6_end");
+                pc15EndCourse = resultSetMaxCourse.getInt("course_pc15_end");
+
+                pc5Employee = pc5EndCourse;
+                pc6Employee = pc6EndCourse;
+                pc15Employee = pc15EndCourse;
+
+                System.out.println("Курс " + course_id);
+                System.out.println("Значения курса: " + " " + pc5EndCourse + pc6EndCourse + pc15EndCourse);
+
+                PreparedStatement preparedStatementInsertEmployeeEnd = dbWorker.getConnection()
+                        .prepareStatement("INSERT INTO employee_end(employee_id, employee_pc5, employee_pc6, employee_pc15) " +
+                                "VALUE (?,?,?,?)");
+                preparedStatementInsertEmployeeEnd.setInt(1, employee_id);
+                preparedStatementInsertEmployeeEnd.setInt(2, pc5EndCourse);
+                preparedStatementInsertEmployeeEnd.setInt(3, pc6EndCourse);
+                preparedStatementInsertEmployeeEnd.setInt(4, pc15EndCourse);
+                preparedStatementInsertEmployeeEnd.executeUpdate();
+
+
+
+
+
+
+
+
+
 
 
 
