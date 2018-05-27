@@ -61,6 +61,7 @@ public class Main {
                     preparedStatement.setInt(1, course_id);
                     preparedStatement.setInt(2, employee_id);
                     preparedStatement.setDouble(3, effect);
+                    preparedStatement.executeUpdate();
 
                     String queryInsertEffect = "INSERT INTO effect(course_id, employee_id, effect) \n" +
                             "VALUES(";
