@@ -28,7 +28,7 @@ public class CalculationForDB {
     private static int number = 0;
 
 
-    public static void theFirstCalculationEffect(DBWorker dbWorker) {
+    public static void FirstCalculationEffect(DBWorker dbWorker) {
         try {
             Statement statement = dbWorker.getConnection().createStatement();
             ResultSet resultSetEmployee = statement.executeQuery("SELECT * FROM employee_start");
