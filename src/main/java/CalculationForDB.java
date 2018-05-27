@@ -78,6 +78,7 @@ public class CalculationForDB {
                             price);
 
 
+                    System.out.println("ПЕРВЫЙ РЕЗУЛЬТАТ");
                     System.out.println("ПОЛУЧЕН ЭФФЕКТ: " + String.format("%.2f", effect));
 
                     if (countEffect == 0) {
@@ -119,6 +120,7 @@ public class CalculationForDB {
         preparedStatement.setDouble(1, effect);
         preparedStatement.setInt(2, course_id);
         preparedStatement.setInt(3, employee_id);
+        preparedStatement.executeUpdate();
     }
 
     private static void insertEmployeeEnd(DBWorker dbWorker) throws SQLException {
@@ -177,13 +179,9 @@ public class CalculationForDB {
                 pc6Employee = pc6EndCourse;
                 pc15Employee = pc15EndCourse;
 
-                System.out.println("Курс " + course_id);
-                System.out.println("Значения курса: " + " " + pc5EndCourse + pc6EndCourse + pc15EndCourse);
-
                 insertEmployeeEnd(dbWorker);
                 insertVisitation(dbWorker);
 
-                // TODO
 
                 ResultSet resultSetCourse = statement.executeQuery("SELECT * FROM course");
                 while (resultSetCourse.next()) {
@@ -208,11 +206,11 @@ public class CalculationForDB {
                             price);
 
                     updateEffect(dbWorker);
-                    System.out.println(course_name + ": эффект за курс " + effect); // fixme later
                 }
 
                 numberOnCourse++;
                 number++;
+
             }
 
         } catch (SQLException e) {
