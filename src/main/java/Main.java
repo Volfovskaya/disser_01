@@ -1,12 +1,11 @@
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        ArrayList<Employee> arrayListEmployee = new ArrayList<>();
-
 
 
         DBWorker dbWorker = new DBWorker();
@@ -14,14 +13,13 @@ public class Main {
         try {
             Statement statement = dbWorker.getConnection().createStatement();
             ResultSet resultSetEmployee = statement.executeQuery("SELECT * FROM employee_start");
+
             statement = dbWorker.getConnection().createStatement();
             ResultSet resultSetCourse;
 
-
-
-            arrayListEmployee.add(new Employee());
-            arrayListEmployee.add(new Employee());
-
+            PreparedStatement preparedStatement = dbWorker.getConnection()
+                    .prepareStatement("INSERT INTO effect(course_id, employee_id, effect) " +
+                            "VALUE (?,?,?)");
 
             while (resultSetEmployee.next()) {
 
@@ -33,7 +31,6 @@ public class Main {
                 int pc5Employee = resultSetEmployee.getInt("employee_pc5");
                 int pc6Employee = resultSetEmployee.getInt("employee_pc6");
                 int pc15Employee = resultSetEmployee.getInt("employee_pc15");
-
 
                 resultSetCourse = statement.executeQuery("SELECT * FROM course");
 
@@ -58,33 +55,31 @@ public class Main {
                             pc5StartCourse, pc6StartCourse, pc15StartCourse,
                             pc5EndCourse, pc6EndCourse, pc15EndCourse,
                             price);
-                    System.out.println("ПОЛУЧЕН ЭФФЕКТ: " + effect);
+
+                    // TODO
+
+                    preparedStatement.setInt(1, course_id);
+                    preparedStatement.setInt(2, employee_id);
+                    preparedStatement.setDouble(3, effect);
+
+                    String queryInsertEffect = "INSERT INTO effect(course_id, employee_id, effect) \n" +
+                            "VALUES(";
+
+                    System.out.println("ПОЛУЧЕН ЭФФЕКТ: " + String.format("%.2f", effect));
 
                 }
 
             }
 
 
-
-
-
-
-
-
-
-
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        finally {
+        } finally {
             try {
                 dbWorker.getConnection().close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-
-
     }
 }

@@ -9,7 +9,9 @@ public class MathCompetence {
         double pc15;
         double effect = 0;
 
-        if (pc5Employee < pc5StartCourse | pc6Employee < pc6StartCourse | pc15Employee < pc15StartCourse) {
+        if (pc5Employee < pc5StartCourse |
+                pc6Employee < pc6StartCourse |
+                pc15Employee < pc15StartCourse) {
             return effect;
         } else {
             pc5 = pc5EndCourse - pc5Employee;
