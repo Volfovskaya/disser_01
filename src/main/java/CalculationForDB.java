@@ -28,7 +28,7 @@ public class CalculationForDB {
     private static int number = 0;
 
 
-    public static void calculationEffect(DBWorker dbWorker) {
+    public static void theFirstCalculationEffect(DBWorker dbWorker) {
         try {
             Statement statement = dbWorker.getConnection().createStatement();
             ResultSet resultSetEmployee = statement.executeQuery("SELECT * FROM employee_start");
@@ -59,7 +59,7 @@ public class CalculationForDB {
 
                     course_id = resultSetCourse.getInt("course_id");
 
-                    String course_name = resultSetCourse.getString("course_name");
+                    String course_name = resultSetCourse.getString("course_name"); // fixme later
                     System.out.println(course_name);
 
                     pc5StartCourse = resultSetCourse.getInt("course_pc5_start");
@@ -112,7 +112,14 @@ public class CalculationForDB {
         preparedStatementInsertEffect.setInt(2, employee_id);
         preparedStatementInsertEffect.setDouble(3, effect);
         preparedStatementInsertEffect.executeUpdate();
+    }
 
+    private static void updateEffect(DBWorker dbWorker) throws SQLException {
+        PreparedStatement preparedStatement = dbWorker.getConnection()
+                .prepareStatement("UPDATE effect SET effect.effect = ? WHERE course_id = ? AND employee_id = ?");
+        preparedStatement.setDouble(1, effect);
+        preparedStatement.setInt(2, course_id);
+        preparedStatement.setInt(3, employee_id);
     }
 
     public static void planMaker(DBWorker dbWorker, int maxBudget, int maxNumberOnCourse, int maxNumber) {
@@ -153,10 +160,49 @@ public class CalculationForDB {
                         .prepareStatement("INSERT INTO employee_end(employee_id, employee_pc5, employee_pc6, employee_pc15) " +
                                 "VALUE (?,?,?,?)");
                 preparedStatementInsertEmployeeEnd.setInt(1, employee_id);
-                preparedStatementInsertEmployeeEnd.setInt(2, pc5EndCourse);
-                preparedStatementInsertEmployeeEnd.setInt(3, pc6EndCourse);
-                preparedStatementInsertEmployeeEnd.setInt(4, pc15EndCourse);
+                preparedStatementInsertEmployeeEnd.setInt(2, pc5Employee);
+                preparedStatementInsertEmployeeEnd.setInt(3, pc6Employee);
+                preparedStatementInsertEmployeeEnd.setInt(4, pc15Employee);
                 preparedStatementInsertEmployeeEnd.executeUpdate();
+
+                PreparedStatement preparedStatementInsertVisitation = dbWorker.getConnection()
+                        .prepareStatement("INSERT INTO visitation(course_id, employee_id, visitation_order) " +
+                        "VALUE (?,?,?)");
+                preparedStatementInsertVisitation.setInt(1, course_id);
+                preparedStatementInsertVisitation.setInt(2, employee_id);
+                preparedStatementInsertVisitation.setInt(3, number + 1);
+                preparedStatementInsertVisitation.executeUpdate();
+
+                // TODO
+
+                ResultSet resultSetCourse = statement.executeQuery("SELECT * FROM course");
+                while (resultSetCourse.next()) {
+
+                    course_id = resultSetCourse.getInt("course_id");
+
+                    String course_name = resultSetCourse.getString("course_name"); // fixme later
+
+                    pc5StartCourse = resultSetCourse.getInt("course_pc5_start");
+                    pc6StartCourse = resultSetCourse.getInt("course_pc6_start");
+                    pc15StartCourse = resultSetCourse.getInt("course_pc15_start");
+
+                    pc5EndCourse = resultSetCourse.getInt("course_pc5_end");
+                    pc6EndCourse = resultSetCourse.getInt("course_pc6_end");
+                    pc15EndCourse = resultSetCourse.getInt("course_pc15_end");
+
+                    price = resultSetCourse.getInt("course_price");
+
+                    effect = MathCompetence.getEffect(pc5Employee, pc6Employee, pc15Employee,
+                            pc5StartCourse, pc6StartCourse, pc15StartCourse,
+                            pc5EndCourse, pc6EndCourse, pc15EndCourse,
+                            price);
+
+                    updateEffect(dbWorker);
+                    System.out.println(course_name + ": эффект за курс " + effect); // fixme later
+
+
+                }
+
 
 
 

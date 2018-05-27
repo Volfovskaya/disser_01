@@ -4,7 +4,7 @@ public class Main {
 
         DBWorker dbWorker = new DBWorker();
 
-        CalculationForDB.calculationEffect(dbWorker);
+        CalculationForDB.theFirstCalculationEffect(dbWorker);
 
         dbWorker = new DBWorker();
 
