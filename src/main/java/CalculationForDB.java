@@ -23,8 +23,12 @@ public class CalculationForDB {
     private static int price;
     private static double effect;
 
+    private static int budget = 0;
+    private static int numberOnCourse = 0;
+    private static int number = 0;
 
-    public static void theFirstCalculationEffect(DBWorker dbWorker) {
+
+    public static void calculationEffect(DBWorker dbWorker) {
         try {
             Statement statement = dbWorker.getConnection().createStatement();
             ResultSet resultSetEmployee = statement.executeQuery("SELECT * FROM employee_start");
@@ -77,7 +81,7 @@ public class CalculationForDB {
                     System.out.println("ПОЛУЧЕН ЭФФЕКТ: " + String.format("%.2f", effect));
 
                     if (countEffect == 0) {
-                        theSecondInsertEffect(dbWorker);
+                        insertEffect(dbWorker);
                     }
 
 
@@ -98,7 +102,7 @@ public class CalculationForDB {
 
     }
 
-    private static void theSecondInsertEffect(DBWorker dbWorker) throws SQLException {
+    private static void insertEffect(DBWorker dbWorker) throws SQLException {
 
         PreparedStatement preparedStatementInsertEffect = dbWorker.getConnection()
                 .prepareStatement("INSERT INTO effect(course_id, employee_id, effect) " +
@@ -109,7 +113,41 @@ public class CalculationForDB {
         preparedStatementInsertEffect.setDouble(3, effect);
         preparedStatementInsertEffect.executeUpdate();
 
+    }
+
+    public static void planMaker(DBWorker dbWorker, int maxBudget, int maxNumberOnCourse, int maxNumber) {
+        try {
+            while (budget < maxBudget & numberOnCourse < maxNumberOnCourse & number < maxNumber) {
+
+                Statement statement = dbWorker.getConnection().createStatement();
+                ResultSet resultSetMaxEffect = statement.executeQuery("SELECT effect.course_id, effect.employee_id, MAX(effect) " +
+                        "FROM effect WHERE effect = (SELECT MAX(effect) FROM effect)");
+
+                resultSetMaxEffect.next();
+                course_id = resultSetMaxEffect.getInt("course_id");
+                employee_id = resultSetMaxEffect.getInt("employee_id");
+                effect = resultSetMaxEffect.getDouble("MAX(effect)");
+
+
+
+
+                budget++;
+                numberOnCourse++;
+                number++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                dbWorker.getConnection().close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
+
 
 }
