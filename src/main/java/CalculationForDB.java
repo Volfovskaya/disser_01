@@ -175,6 +175,8 @@ public class CalculationForDB {
                 price = resultSetMaxCourse.getInt("course_price");
                 budget = budget + price;
 
+                System.out.println("Бюджет: " + budget);
+
                 pc5Employee = pc5EndCourse;
                 pc6Employee = pc6EndCourse;
                 pc15Employee = pc15EndCourse;

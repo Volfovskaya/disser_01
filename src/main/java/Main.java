@@ -8,7 +8,7 @@ public class Main {
 
         dbWorker = new DBWorker();
 
-        CalculationForDB.planMaker(dbWorker, 10000, 100, 15);
+        CalculationForDB.planMaker(dbWorker, 500, 100, 100);
 
     }
 }
