@@ -84,8 +84,6 @@ public class CalculationForDB {
                     if (countEffect == 0) {
                         insertEffect(dbWorker);
                     }
-
-
                 }
 
             }
