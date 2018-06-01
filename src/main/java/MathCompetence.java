@@ -30,7 +30,12 @@ public class MathCompetence {
                 pc15 = 0;
             }
 
-            effect = (pc5 + pc6 + pc15) / price;
+            effect = (pc5 + pc6 + pc15);
+            if (effect == 0) {
+                return effect;
+            }
+
+            effect = effect / price;
             return effect;
 
         }

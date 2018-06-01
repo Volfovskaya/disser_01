@@ -142,6 +142,59 @@ public class CalculationForDB {
         preparedStatementInsertVisitation.executeUpdate();
     }
 
+    public static int calculationLimitMaxEffect(DBWorker dbWorker) throws SQLException {
+        int id;
+        int pc5start;
+        int pc6start;
+        int pc15start;
+
+        int pc5end;
+        int pc6end;
+        int pc15end;
+
+        int counter;
+        int maxEffect = 0;
+
+        Statement statementStart = dbWorker.getConnection().createStatement();
+        Statement statementEnd = dbWorker.getConnection().createStatement();
+        ResultSet resultSetEmployeeStart = statementStart.executeQuery("SELECT " +
+                "employee_id, employee_pc5, employee_pc6, employee_pc15 FROM employee_start");
+
+        ResultSet resultSetEmployeeEnd;
+
+        while (resultSetEmployeeStart.next()) {
+            id = resultSetEmployeeStart.getInt("employee_id");
+            pc5start = resultSetEmployeeStart.getInt("employee_pc5");
+            pc6start = resultSetEmployeeStart.getInt("employee_pc6");
+            pc15start = resultSetEmployeeStart.getInt("employee_pc15");
+
+            String query;
+            query = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
+                    "COUNT(employee_id) FROM employee_end WHERE employee_id = " + id + " \n" +
+                    "AND employee_end_id = (SELECT MAX(employee_end_id) FROM employee_end WHERE employee_id = " + id + ");";
+
+
+            resultSetEmployeeEnd = statementEnd.executeQuery(query);
+
+            while (resultSetEmployeeEnd.next()) {
+                counter = resultSetEmployeeEnd.getInt("COUNT(employee_id)");
+                if (counter != 0) {
+
+                    pc5end = resultSetEmployeeEnd.getInt("employee_pc5");
+                    pc6end = resultSetEmployeeEnd.getInt("employee_pc6");
+                    pc15end = resultSetEmployeeEnd.getInt("employee_pc15");
+
+                    maxEffect = maxEffect + (pc5end - pc5start) + (pc6end - pc6start) + (pc15end - pc15start);
+                }
+
+            }
+
+
+        }
+
+        return maxEffect;
+    }
+
     public static void planMaker(DBWorker dbWorker, int maxBudget, int maxNumberOnCourse, int maxNumber) {
         try {
             while (budget < maxBudget & numberOnCourse < maxNumberOnCourse & number < maxNumber) {
@@ -172,12 +225,52 @@ public class CalculationForDB {
 
                 price = resultSetMaxCourse.getInt("course_price");
                 budget = budget + price;
+                if (budget > maxBudget) {
+                    return;
+                }
+
+                // TODO THIS AAAAAAAAAAAAA
+
+                String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
+                        "COUNT(employee_id) FROM employee_end WHERE employee_id = " + employee_id + " \n" +
+                        "AND employee_end_id = (SELECT MAX(employee_end_id) FROM employee_end WHERE employee_id = " + employee_id + ");";
+
+                Statement statementEmployee = dbWorker.getConnection().createStatement();
+                ResultSet resultSetCurrentEmployee = statementEmployee.executeQuery(queryEmployee);
+
+                resultSetCurrentEmployee.next();
+                int counterEmployee = resultSetCurrentEmployee.getInt("COUNT(employee_id)");
+                if (counterEmployee > 0) {
+                    pc5Employee = resultSetCurrentEmployee.getInt("employee_pc5");
+                    pc6Employee = resultSetCurrentEmployee.getInt("employee_pc6");
+                    pc15Employee = resultSetCurrentEmployee.getInt("employee_pc15");
+
+                } else {
+                    statementEmployee = dbWorker.getConnection().createStatement();
+                    resultSetCurrentEmployee = statementEmployee.executeQuery("SELECT employee_pc5, employee_pc6, employee_pc15 " +
+                            "FROM employee_start WHERE employee_id = " + employee_id);
+
+                    resultSetCurrentEmployee.next();
+                    pc5Employee = resultSetCurrentEmployee.getInt("employee_pc5");
+                    pc6Employee = resultSetCurrentEmployee.getInt("employee_pc6");
+                    pc15Employee = resultSetCurrentEmployee.getInt("employee_pc15");
+                }
 
                 System.out.println("Бюджет: " + budget);
 
-                pc5Employee = pc5EndCourse;
-                pc6Employee = pc6EndCourse;
-                pc15Employee = pc15EndCourse;
+
+                if (pc5Employee < pc5EndCourse) {
+                    pc5Employee = pc5EndCourse;
+                }
+
+                if (pc6Employee < pc6EndCourse) {
+                    pc6Employee = pc6EndCourse;
+                }
+
+                if (pc15Employee < pc15EndCourse) {
+                    pc15Employee = pc15EndCourse;
+                }
+
 
                 insertEmployeeEnd(dbWorker);
                 insertVisitation(dbWorker);
