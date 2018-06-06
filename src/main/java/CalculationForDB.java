@@ -307,6 +307,7 @@ public class CalculationForDB {
                 numberOnCourse++;
                 number++;
                 increment = calculationLimitMaxEffect(dbWorker);
+                System.out.println(increment);
 
             }
 
