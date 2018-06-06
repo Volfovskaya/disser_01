@@ -4,6 +4,7 @@ public class Main {
 
         DBWorker dbWorker = new DBWorker();
 
+
         CalculationForDB.FirstCalculationEffect(dbWorker);
 
         dbWorker = new DBWorker();

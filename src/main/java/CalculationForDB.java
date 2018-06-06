@@ -186,10 +186,7 @@ public class CalculationForDB {
 
                     maxEffect = maxEffect + (pc5end - pc5start) + (pc6end - pc6start) + (pc15end - pc15start);
                 }
-
             }
-
-
         }
 
         return maxEffect;
@@ -228,8 +225,6 @@ public class CalculationForDB {
                 if (budget > maxBudget) {
                     return;
                 }
-
-                // TODO THIS AAAAAAAAAAAAA
 
                 String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
                         "COUNT(employee_id) FROM employee_end WHERE employee_id = " + employee_id + " \n" +
@@ -318,6 +313,5 @@ public class CalculationForDB {
 
 
     }
-
 
 }
