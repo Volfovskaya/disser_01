@@ -54,11 +54,6 @@ public class CalculationForDB {
             ResultSet resultSetEmployee = statement.executeQuery("SELECT * FROM employee_start");
 
             statement = dbWorker.getConnection().createStatement();
-            ResultSet resultSetCountEffect = statement.executeQuery("SELECT COUNT(*) FROM effect");
-            resultSetCountEffect.next();
-            int countEffect = resultSetCountEffect.getInt(1);
-
-            statement = dbWorker.getConnection().createStatement();
             ResultSet resultSetCourse;
 
             while (resultSetEmployee.next()) {
@@ -66,7 +61,6 @@ public class CalculationForDB {
                 employee_id = resultSetEmployee.getInt("employee_id");
 
                 String employee_name = resultSetEmployee.getString("employee_name");
-                System.out.println(employee_name);
 
                 pc5Employee = resultSetEmployee.getInt("employee_pc5");
                 pc6Employee = resultSetEmployee.getInt("employee_pc6");
@@ -96,10 +90,7 @@ public class CalculationForDB {
                             price);
 
 
-
-                    if (countEffect == 0) {
-                        insertEffect(dbWorker);
-                    }
+                    insertEffect(dbWorker);
                 }
 
             }
@@ -222,7 +213,7 @@ public class CalculationForDB {
                 effect = resultSetMaxEffect.getDouble("MAX(effect)");
 
                 if (effect == 0) {
-                    System.out.println("Максимальный эффект равен 0");
+                    System.out.println("Максимальный эффект равен 0"); // fixme
                     return;
                 }
 
