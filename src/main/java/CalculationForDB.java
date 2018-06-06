@@ -27,6 +27,24 @@ public class CalculationForDB {
     private static int numberOnCourse = 0;
     private static int number = 0;
 
+    public static void clearDynamicTables(DBWorker dbWorker) {
+        try {
+            Statement statement = dbWorker.getConnection().createStatement();
+
+            String deleteTablesSQL = "DELETE FROM effect;";
+            statement.executeUpdate(deleteTablesSQL);
+
+            deleteTablesSQL = "DELETE FROM employee_end;";
+            statement.executeUpdate(deleteTablesSQL);
+
+            deleteTablesSQL = "DELETE FROM visitation;";
+            statement.executeUpdate(deleteTablesSQL);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void FirstCalculationEffect(DBWorker dbWorker) {
         try {
