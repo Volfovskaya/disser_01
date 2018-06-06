@@ -27,6 +27,8 @@ public class CalculationForDB {
     private static int numberOnCourse = 0;
     private static int number = 0;
 
+    private static int increment = 0;
+
     public static void clearDynamicTables(DBWorker dbWorker) {
         try {
             Statement statement = dbWorker.getConnection().createStatement();
@@ -55,7 +57,6 @@ public class CalculationForDB {
             ResultSet resultSetCountEffect = statement.executeQuery("SELECT COUNT(*) FROM effect");
             resultSetCountEffect.next();
             int countEffect = resultSetCountEffect.getInt(1);
-            System.out.println("Число строк в эффекте: " + countEffect);
 
             statement = dbWorker.getConnection().createStatement();
             ResultSet resultSetCourse;
@@ -77,8 +78,7 @@ public class CalculationForDB {
 
                     course_id = resultSetCourse.getInt("course_id");
 
-                    String course_name = resultSetCourse.getString("course_name"); // fixme later
-                    System.out.println(course_name);
+                    String course_name = resultSetCourse.getString("course_name");
 
                     pc5StartCourse = resultSetCourse.getInt("course_pc5_start");
                     pc6StartCourse = resultSetCourse.getInt("course_pc6_start");
@@ -96,8 +96,6 @@ public class CalculationForDB {
                             price);
 
 
-                    System.out.println("ПЕРВЫЙ РЕЗУЛЬТАТ");
-                    System.out.println("ПОЛУЧЕН ЭФФЕКТ: " + String.format("%.2f", effect));
 
                     if (countEffect == 0) {
                         insertEffect(dbWorker);
@@ -317,9 +315,10 @@ public class CalculationForDB {
 
                 numberOnCourse++;
                 number++;
-                System.out.println("Приращение: " + calculationLimitMaxEffect(dbWorker));
+                increment = calculationLimitMaxEffect(dbWorker);
 
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
