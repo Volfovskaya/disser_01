@@ -21,8 +21,8 @@ public class Main extends Application {
 
         CalculationForDB.planMaker(dbWorker, 250, 100, 100);
 
-    }
 
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
