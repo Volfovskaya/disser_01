@@ -160,7 +160,7 @@ public class CalculationForDB {
         preparedStatementInsertVisitation.executeUpdate();
     }
 
-    public static int calculationLimitMaxEffect(DBWorker dbWorker) throws SQLException {
+    private static int calculationLimitMaxEffect(DBWorker dbWorker) throws SQLException {
         int id;
         int pc5start;
         int pc6start;
@@ -314,8 +314,10 @@ public class CalculationForDB {
                     updateEffect(dbWorker);
                 }
 
+
                 numberOnCourse++;
                 number++;
+                System.out.println("Приращение: " + calculationLimitMaxEffect(dbWorker));
 
             }
 
