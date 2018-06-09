@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+
 public class JDialogMenu extends JFrame {
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension FRAME_SIZE = new Dimension(400, 400);
@@ -18,9 +20,12 @@ public class JDialogMenu extends JFrame {
         this.setBounds(DISPLAY_SIZE.width / 2 - FRAME_SIZE.width / 2,
                 DISPLAY_SIZE.height / 2 - FRAME_SIZE.height / 2,
                 FRAME_SIZE.width, FRAME_SIZE.height);
+        this.setMinimumSize(this.getSize());
+        this.setMaximumSize(this.getSize());
 
         this.setTitle("АСПРПК");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setBackground(Color.white);
 
         JPanel jPanelWelcome = new JPanel();
         jPanelWelcome.setPreferredSize(new Dimension(80, 80));
@@ -32,8 +37,10 @@ public class JDialogMenu extends JFrame {
         jPanelAcceptLimitsBt.setPreferredSize(PANEL_SIZE);
 
         JTextArea jTextFieldWelcome = new JTextArea("Добро пожаловать в АСПРПК!\n" +
-                "Выберите ограничения на бюджет, количество обучаемых на одном \n" +
+                "Выберите ограничения на бюджет,\nколичество обучаемых на одном \n" +
                 "курсе и общее количество обучаемых");
+        jTextFieldWelcome.setBackground(Color.white);
+
         jPanelWelcome.add(jTextFieldWelcome, BorderLayout.CENTER);
         this.add(jPanelWelcome, BorderLayout.NORTH);
 
@@ -82,5 +89,7 @@ public class JDialogMenu extends JFrame {
 
 
     }
+
+
 
 }
