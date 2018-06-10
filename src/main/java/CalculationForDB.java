@@ -120,6 +120,15 @@ public class CalculationForDB {
     }
 
     private static void updateEffect(DBWorker dbWorker) throws SQLException {
+        Statement statementFindCourse = dbWorker.getConnection().createStatement();
+        ResultSet resultSetFindCourse = statementFindCourse.executeQuery("SELECT COUNT(visitation_id) FROM visitation " +
+                "WHERE course_id = " + course_id + " AND employee_id = " + employee_id + ";");
+        resultSetFindCourse.next();
+        int countFindCourse = resultSetFindCourse.getInt("COUNT(visitation_id)");
+        if (countFindCourse == 1) {
+            effect = -1;
+        }
+
         PreparedStatement preparedStatement = dbWorker.getConnection()
                 .prepareStatement("UPDATE effect SET effect.effect = ? WHERE course_id = ? AND employee_id = ?");
         preparedStatement.setDouble(1, effect);
@@ -129,14 +138,35 @@ public class CalculationForDB {
     }
 
     private static void insertEmployeeEnd(DBWorker dbWorker) throws SQLException {
-        PreparedStatement preparedStatementInsertEmployeeEnd = dbWorker.getConnection()
-                .prepareStatement("INSERT INTO employee_end(employee_id, employee_pc5, employee_pc6, employee_pc15) " +
-                        "VALUE (?,?,?,?)");
-        preparedStatementInsertEmployeeEnd.setInt(1, employee_id);
-        preparedStatementInsertEmployeeEnd.setInt(2, pc5Employee);
-        preparedStatementInsertEmployeeEnd.setInt(3, pc6Employee);
-        preparedStatementInsertEmployeeEnd.setInt(4, pc15Employee);
-        preparedStatementInsertEmployeeEnd.executeUpdate();
+        // TODO
+
+        Statement statementFindCourse = dbWorker.getConnection().createStatement();
+        ResultSet resultSetFindCourse = statementFindCourse.executeQuery("SELECT COUNT(visitation_id) FROM visitation " +
+                "WHERE course_id = " + course_id + " AND employee_id = " + employee_id + ";");
+        resultSetFindCourse.next();
+        int countFindCourse = resultSetFindCourse.getInt("COUNT(visitation_id)");
+        PreparedStatement preparedStatementInsertEmployeeEnd;
+        if (countFindCourse == 1) {
+            preparedStatementInsertEmployeeEnd = dbWorker.getConnection()
+                    .prepareStatement("UPDATE employee_end SET employee_pc5 = ?, employee_pc6 = ?, employee_pc15 = ? " +
+                            "WHERE employee_id = " + employee_id + ";");
+            preparedStatementInsertEmployeeEnd.setInt(1, pc5Employee);
+            preparedStatementInsertEmployeeEnd.setInt(2, pc6Employee);
+            preparedStatementInsertEmployeeEnd.setInt(3, pc15Employee);
+            preparedStatementInsertEmployeeEnd.executeUpdate();
+
+        } else {
+            preparedStatementInsertEmployeeEnd = dbWorker.getConnection()
+                    .prepareStatement("INSERT INTO employee_end(employee_id, employee_pc5, employee_pc6, employee_pc15) " +
+                            "VALUE (?,?,?,?)");
+            preparedStatementInsertEmployeeEnd.setInt(1, employee_id);
+            preparedStatementInsertEmployeeEnd.setInt(2, pc5Employee);
+            preparedStatementInsertEmployeeEnd.setInt(3, pc6Employee);
+            preparedStatementInsertEmployeeEnd.setInt(4, pc15Employee);
+            preparedStatementInsertEmployeeEnd.executeUpdate();
+        }
+
+
     }
 
     private static void insertVisitation(DBWorker dbWorker) throws SQLException {
@@ -213,7 +243,6 @@ public class CalculationForDB {
                 effect = resultSetMaxEffect.getDouble("MAX(effect)");
 
                 if (effect == 0) {
-                    System.out.println("Максимальный эффект равен 0"); // fixme
                     return;
                 }
 
@@ -283,7 +312,6 @@ public class CalculationForDB {
 
                     course_id = resultSetCourse.getInt("course_id");
 
-                    String course_name = resultSetCourse.getString("course_name"); // fixme later
 
                     pc5StartCourse = resultSetCourse.getInt("course_pc5_start");
                     pc6StartCourse = resultSetCourse.getInt("course_pc6_start");

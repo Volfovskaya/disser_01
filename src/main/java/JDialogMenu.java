@@ -25,7 +25,6 @@ public class JDialogMenu extends JFrame {
 
         this.setTitle("АСПРПК");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setBackground(Color.white);
 
         JPanel jPanelWelcome = new JPanel();
         jPanelWelcome.setPreferredSize(new Dimension(80, 80));
@@ -38,8 +37,9 @@ public class JDialogMenu extends JFrame {
 
         JTextArea jTextFieldWelcome = new JTextArea("Добро пожаловать в АСПРПК!\n" +
                 "Выберите ограничения на бюджет,\nколичество обучаемых на одном \n" +
-                "курсе и общее количество обучаемых");
-        jTextFieldWelcome.setBackground(Color.white);
+                "курсе и общее количество обучаемых.");
+
+        jTextFieldWelcome.setBackground(new Color(238, 238, 238));
 
         jPanelWelcome.add(jTextFieldWelcome, BorderLayout.CENTER);
         this.add(jPanelWelcome, BorderLayout.NORTH);
@@ -63,10 +63,11 @@ public class JDialogMenu extends JFrame {
         JButton jButtonAcceptLimits = new JButton("Принять ограничения");
         jButtonAcceptLimits.setPreferredSize(BUTTON_SIZE);
 
+
         jPanelAcceptLimitsBt.add(jButtonAcceptLimits, BorderLayout.CENTER);
         this.getContentPane().add(jPanelAcceptLimitsBt, BorderLayout.AFTER_LAST_LINE);
 
-        budget = Integer.parseInt(jBudget.getText());
+        jButtonAcceptLimits.setBounds(50, 50, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
         jButtonAcceptLimits.addActionListener(new ActionListener() {
             @Override
