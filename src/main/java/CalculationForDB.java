@@ -138,15 +138,14 @@ public class CalculationForDB {
     }
 
     private static void insertEmployeeEnd(DBWorker dbWorker) throws SQLException {
-        // TODO
 
-        Statement statementFindCourse = dbWorker.getConnection().createStatement();
-        ResultSet resultSetFindCourse = statementFindCourse.executeQuery("SELECT COUNT(visitation_id) FROM visitation " +
-                "WHERE course_id = " + course_id + " AND employee_id = " + employee_id + ";");
-        resultSetFindCourse.next();
-        int countFindCourse = resultSetFindCourse.getInt("COUNT(visitation_id)");
+        Statement statementCountEmployeeEnd = dbWorker.getConnection().createStatement();
+        ResultSet resultSetCountEmployeeEnd = statementCountEmployeeEnd.executeQuery("SELECT COUNT(employee_id) FROM employee_end " +
+                "WHERE employee_id = " + employee_id + ";");
+        resultSetCountEmployeeEnd.next();
+        int countEmployeeEnd = resultSetCountEmployeeEnd.getInt("COUNT(employee_id)");
         PreparedStatement preparedStatementInsertEmployeeEnd;
-        if (countFindCourse == 1) {
+        if (countEmployeeEnd == 1) {
             preparedStatementInsertEmployeeEnd = dbWorker.getConnection()
                     .prepareStatement("UPDATE employee_end SET employee_pc5 = ?, employee_pc6 = ?, employee_pc15 = ? " +
                             "WHERE employee_id = " + employee_id + ";");
@@ -207,8 +206,7 @@ public class CalculationForDB {
 
             String query;
             query = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
-                    "COUNT(employee_id) FROM employee_end WHERE employee_id = " + id + " \n" +
-                    "AND employee_end_id = (SELECT MAX(employee_end_id) FROM employee_end WHERE employee_id = " + id + ");";
+                    "COUNT(employee_id) FROM employee_end WHERE employee_id = " + id + ";";
 
 
             resultSetEmployeeEnd = statementEnd.executeQuery(query);
