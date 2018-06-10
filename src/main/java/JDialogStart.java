@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class JDialogStart extends JFrame {
@@ -13,8 +11,6 @@ public class JDialogStart extends JFrame {
 
 
     private int budget = 0;
-    private int countPeopleCourse = 0;
-    private int countPeople = 0;
 
     public int getBudget() {
         return budget;
@@ -24,13 +20,7 @@ public class JDialogStart extends JFrame {
         this.budget = budget;
     }
 
-    public int getCountPeople() {
-        return countPeople;
-    }
 
-    public void setCountPeople(int countPeople) {
-        this.countPeople = countPeople;
-    }
 
 
 
@@ -83,34 +73,23 @@ public class JDialogStart extends JFrame {
         jButtonAcceptLimits.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
                 180, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
-        jButtonAcceptLimits.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    setBudget(Integer.parseInt(jBudget.getText()));
+        jButtonAcceptLimits.addActionListener(e -> {
+            try {
+
+                setBudget(Integer.parseInt(jBudget.getText()));
+                if (budget >= 0) {
                     Main.budgetMain = getBudget();
-
-
-                } catch (NumberFormatException e1) {
-
-                    JOptionPane.showMessageDialog(null, "Ошибка");
+                    JDialogCountCourse jDialogCountCourse = new JDialogCountCourse();
+                    jDialogCountCourse.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Введите корректное число >= 0!");
                 }
-                JDialogCountCourse jDialogCountCourse = new JDialogCountCourse();
-                jDialogCountCourse.setVisible(true);
-                dispose();
-
-
-
-                System.out.println("Получен бюджет: " + budget);
-
+            } catch (NumberFormatException e1) {
+                JOptionPane.showMessageDialog(null, "Ошибка");
             }
+            System.out.println("Получен бюджет: " + budget);
         });
-
-
         this.setVisible(true);
-
-
     }
-
-
 }

@@ -240,7 +240,7 @@ public class CalculationForDB {
                 employee_id = resultSetMaxEffect.getInt("employee_id");
                 effect = resultSetMaxEffect.getDouble("MAX(effect)");
 
-                if (effect == 0) {
+                if (effect == -1) {
                     return;
                 }
 

@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class JDialogCountCourse extends JFrame {
     protected static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
@@ -11,6 +9,7 @@ public class JDialogCountCourse extends JFrame {
 
 
     private int countPeopleCourse = 0;
+
     public int getCountPeopleCourse() {
         return countPeopleCourse;
     }
@@ -18,7 +17,6 @@ public class JDialogCountCourse extends JFrame {
     public void setCountPeopleCourse(int countPeopleCourse) {
         this.countPeopleCourse = countPeopleCourse;
     }
-
 
 
     JDialogCountCourse() {
@@ -60,26 +58,22 @@ public class JDialogCountCourse extends JFrame {
         jButtonAcceptLimits.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
                 110, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
-        jButtonAcceptLimits.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    setCountPeopleCourse(Integer.parseInt(jCountPeopleOnCourse.getText()));
+        jButtonAcceptLimits.addActionListener(e -> {
+            try {
+                setCountPeopleCourse(Integer.parseInt(jCountPeopleOnCourse.getText()));
+                if (countPeopleCourse >= 0) {
                     Main.countPeopleCourseMain = getCountPeopleCourse();
-
-
-                } catch (NumberFormatException e1) {
-
-                    JOptionPane.showMessageDialog(null, "Ошибка");
+                    JDialogCountPeople jDialogCountPeople = new JDialogCountPeople();
+                    jDialogCountPeople.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Введите корректное число >= 0!");
                 }
-                dispose();
+            } catch (NumberFormatException e1) {
 
-
-
-                System.out.println("Получены люди на курсе: " + countPeopleCourse);
-
+                JOptionPane.showMessageDialog(null, "Ошибка");
             }
+            System.out.println("Получены люди на курсе: " + countPeopleCourse);
         });
-
     }
 }
