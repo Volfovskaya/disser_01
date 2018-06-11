@@ -258,12 +258,10 @@ public class CalculationForDB {
                 pc15EndCourse = resultSetMaxCourse.getInt("course_pc15_end");
 
                 price = resultSetMaxCourse.getInt("course_price");
-
                 budget = budget + price;
                 if (budget > maxBudget) {
                     return;
                 }
-
 
                 String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
                         "COUNT(employee_id) FROM employee_end WHERE employee_id = " + employee_id + " \n" +
@@ -289,6 +287,8 @@ public class CalculationForDB {
                     pc6Employee = resultSetCurrentEmployee.getInt("employee_pc6");
                     pc15Employee = resultSetCurrentEmployee.getInt("employee_pc15");
                 }
+
+                System.out.println("Бюджет: " + budget);
 
 
                 if (pc5Employee < pc5EndCourse) {
@@ -330,23 +330,20 @@ public class CalculationForDB {
                             price);
 
                     updateEffect(dbWorker);
-
-
-                    numberOnCourse++;
-                    number++;
-                    increment = calculationLimitMaxEffect(dbWorker);
-                    System.out.println(increment);
                 }
+
+
+                numberOnCourse++;
+                number++;
+                increment = calculationLimitMaxEffect(dbWorker);
+                System.out.println(increment);
+
             }
 
-        } catch (
-                SQLException e)
 
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally
-
-        {
+        } finally {
             try {
                 dbWorker.getConnection().close();
             } catch (SQLException e) {
