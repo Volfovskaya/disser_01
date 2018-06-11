@@ -74,5 +74,31 @@ public class JDialogMenuResult extends JFrame {
             }
         });
 
+        JButton jButtonCourse = new JButton("Сведения о курсах");
+        jButtonCourse.setPreferredSize(BUTTON_SIZE);
+        this.add(jButtonCourse);
+        jButtonCourse.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
+                210, BUTTON_SIZE.width, BUTTON_SIZE.height);
+
+        jButtonCourse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new JResultCourse();
+            }
+        });
+
+        JButton jButtonCompetence = new JButton("Сведения о компетенциях");
+        jButtonCompetence.setPreferredSize(BUTTON_SIZE);
+        this.add(jButtonCompetence);
+        jButtonCompetence.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
+                260, BUTTON_SIZE.width, BUTTON_SIZE.height);
+
+        jButtonCompetence.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new JResultCompetence();
+            }
+        });
+
     }
 }
