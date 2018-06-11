@@ -17,7 +17,7 @@ public class JResultEmployeeEnd {
 
     JResultEmployeeEnd() {
         try {
-            Statement statement = dbWorker.getConnection()
+            statement = dbWorker.getConnection()
                     .createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT s.employee_id, s.employee_name, s.employee_position, e.employee_pc5, e.employee_pc6, e.employee_pc15\n" +
                     "FROM employee_start AS s\n" +

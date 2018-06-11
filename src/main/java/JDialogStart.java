@@ -20,11 +20,6 @@ public class JDialogStart extends JFrame {
         this.budget = budget;
     }
 
-
-
-
-
-
     public JDialogStart() {
 
         this.setLayout(null);
