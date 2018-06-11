@@ -29,6 +29,11 @@ public class CalculationForDB {
 
     private static int increment = 0;
 
+    private static int course3 = 0;
+    private static int course4 = 0;
+    private static int course5 = 0;
+    private static int course6 = 0;
+
     public static void clearDynamicTables(DBWorker dbWorker) {
         try {
             Statement statement = dbWorker.getConnection().createStatement();
@@ -144,6 +149,16 @@ public class CalculationForDB {
         preparedStatement.setDouble(1, effect);
         preparedStatement.setInt(2, course_id);
         preparedStatement.setInt(3, employee_id);
+        preparedStatement.executeUpdate();
+
+    }
+
+    private static void deleteEffect(DBWorker dbWorker) throws SQLException {
+
+        String deleteEffectOfCourse = "UPDATE effect SET effect.effect = ? WHERE course_id = ?;";
+        PreparedStatement preparedStatement = dbWorker.getConnection().prepareStatement(deleteEffectOfCourse);
+        preparedStatement.setDouble(1, -1);
+        preparedStatement.setInt(2, course_id);
         preparedStatement.executeUpdate();
 
     }
@@ -271,6 +286,20 @@ public class CalculationForDB {
                 price = resultSetMaxCourse.getInt("course_price");
                 budget = budget + price;
 
+                switch (course_id) {
+                    case 3:
+                        course3++;
+                    case 4:
+                        course4++;
+                    case 5:
+                        course5++;
+                    case 6:
+                        course6++;
+                }
+                if (course3 > maxNumberOnCourse) {
+
+                }
+
 
                 // TODO
                 if (budget > maxBudget) {
@@ -278,6 +307,8 @@ public class CalculationForDB {
                     closeEffect(dbWorker);
                     continue;
                 }
+
+
 
                 String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
                         "COUNT(employee_id) FROM employee_end WHERE employee_id = " + employee_id + " \n" +
