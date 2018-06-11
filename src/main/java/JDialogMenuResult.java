@@ -1,11 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class JDialogMenuResult extends JFrame {
-    protected static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    protected static final Dimension FRAME_SIZE = new Dimension(400, 400);
-    protected static final Dimension TEXT_FIELD_SIZE = new Dimension(280, 50);
-    protected static final Dimension BUTTON_SIZE = new Dimension(250, 40);
+    private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final Dimension FRAME_SIZE = new Dimension(400, 400);
+    private static final Dimension TEXT_FIELD_SIZE = new Dimension(280, 50);
+    private static final Dimension BUTTON_SIZE = new Dimension(250, 40);
 
     JDialogMenuResult() {
         this.setLayout(null);
@@ -33,13 +35,31 @@ public class JDialogMenuResult extends JFrame {
                 TEXT_FIELD_SIZE.width,
                 TEXT_FIELD_SIZE.height);
 
-        JButton jButtonAcceptLimits = new JButton("Исходные данные сотрудников");
-        jButtonAcceptLimits.setPreferredSize(BUTTON_SIZE);
-        this.add(jButtonAcceptLimits);
-        jButtonAcceptLimits.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
+        JButton jButtonEmployeeStart = new JButton("Исходные данные сотрудников");
+        jButtonEmployeeStart.setPreferredSize(BUTTON_SIZE);
+        this.add(jButtonEmployeeStart);
+        jButtonEmployeeStart.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
                 60, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
-        jButtonAcceptLimits.addActionListener(e -> System.out.println("Исходные данные выведены"));
+        jButtonEmployeeStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new JResultEmployeeStart();
+            }
+        });
+
+        JButton jButtonEmployeeEnd = new JButton("Конечные данные сотрудников");
+        jButtonEmployeeEnd.setPreferredSize(BUTTON_SIZE);
+        this.add(jButtonEmployeeEnd);
+        jButtonEmployeeEnd.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
+                110, BUTTON_SIZE.width, BUTTON_SIZE.height);
+
+        jButtonEmployeeEnd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new JResultEmployeeEnd();
+            }
+        });
 
     }
 }
