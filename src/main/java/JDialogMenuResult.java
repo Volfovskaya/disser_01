@@ -61,5 +61,18 @@ public class JDialogMenuResult extends JFrame {
             }
         });
 
+        JButton jButtonVisitation = new JButton("Посещение курсов");
+        jButtonVisitation.setPreferredSize(BUTTON_SIZE);
+        this.add(jButtonVisitation);
+        jButtonVisitation.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
+                160, BUTTON_SIZE.width, BUTTON_SIZE.height);
+
+        jButtonVisitation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new JResultVisitation();
+            }
+        });
+
     }
 }
