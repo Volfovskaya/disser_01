@@ -23,7 +23,33 @@ public class JResultEmployeeStart {
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
-                defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                String columnName;
+                columnName = resultSetMetaData.getColumnName(column);
+
+                switch (columnName) {
+                    case "employee_name":
+                        defaultTableModel.addColumn("Имя сотрудника");
+                        break;
+                    case "employee_birth":
+                        defaultTableModel.addColumn("Дата рождения");
+                        break;
+                    case "employee_position":
+                        defaultTableModel.addColumn("Должность сотрудника");
+                        break;
+                    case "employee_pc5":
+                        defaultTableModel.addColumn("ПК-5");
+                        break;
+                    case "employee_pc6":
+                        defaultTableModel.addColumn("ПК-6");
+                        break;
+                    case "employee_pc15":
+                        defaultTableModel.addColumn("ПК-15");
+                        break;
+                    default:
+                        defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                        break;
+                }
+
             }
 
             while (resultSet.next()) {

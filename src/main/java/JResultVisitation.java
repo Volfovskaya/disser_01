@@ -27,7 +27,21 @@ public class JResultVisitation {
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
-                defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                String columnName = resultSetMetaData.getColumnName(column);
+                switch (columnName) {
+                    case "employee_name":
+                        defaultTableModel.addColumn("Имя сотрудника");
+                        break;
+                    case "course_name":
+                        defaultTableModel.addColumn("Название курса");
+                        break;
+                    case "visitation_order":
+                        defaultTableModel.addColumn("Порядок посещения");
+                        break;
+                    default:
+                        defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                        break;
+                }
             }
 
             while (resultSet.next()) {

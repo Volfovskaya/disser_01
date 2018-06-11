@@ -19,14 +19,30 @@ public class JResultEmployeeEnd {
         try {
             statement = dbWorker.getConnection()
                     .createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT s.employee_id, s.employee_name, s.employee_position, e.employee_pc5, e.employee_pc6, e.employee_pc15\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT s.employee_id, s.employee_name," +
+                    " s.employee_position, e.employee_pc5, e.employee_pc6, e.employee_pc15\n" +
                     "FROM employee_start AS s\n" +
                     "RIGHT JOIN employee_end AS e\n" +
                     "ON s.employee_id = e.employee_id ORDER BY s.employee_id;");
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
-                defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                String columnName;
+                columnName = resultSetMetaData.getColumnName(column);
+
+                if (columnName.equals("employee_name")) {
+                    defaultTableModel.addColumn("Имя сотрудника");
+                } else if (columnName.equals("employee_position")) {
+                    defaultTableModel.addColumn("Должность сотрудника");
+                } else if (columnName.equals("employee_pc5")) {
+                    defaultTableModel.addColumn("ПК-5");
+                } else if (columnName.equals("employee_pc6")) {
+                    defaultTableModel.addColumn("ПК-6");
+                } else if (columnName.equals("employee_pc15")) {
+                    defaultTableModel.addColumn("ПК-15");
+                } else {
+                    defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                }
             }
 
             while (resultSet.next()) {

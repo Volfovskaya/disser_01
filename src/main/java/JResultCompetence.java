@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.Vector;
 
 public class JResultCompetence {
@@ -23,7 +24,15 @@ public class JResultCompetence {
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
-                defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                String columnName = resultSetMetaData.getColumnName(column);
+
+                if (columnName.equals("competence_name")) {
+                    defaultTableModel.addColumn("Название компетенции");
+                } else if (columnName.equals("competence_caption")) {
+                    defaultTableModel.addColumn("Описание компетенции");
+                } else {
+                    defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                }
             }
 
             while (resultSet.next()) {
