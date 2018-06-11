@@ -137,6 +137,17 @@ public class CalculationForDB {
         preparedStatement.executeUpdate();
     }
 
+    private static void closeEffect(DBWorker dbWorker) throws SQLException {
+        effect = -1;
+        PreparedStatement preparedStatement = dbWorker.getConnection()
+                .prepareStatement("UPDATE effect SET effect.effect = ? WHERE course_id = ? AND employee_id = ?");
+        preparedStatement.setDouble(1, effect);
+        preparedStatement.setInt(2, course_id);
+        preparedStatement.setInt(3, employee_id);
+        preparedStatement.executeUpdate();
+
+    }
+
     private static void insertEmployeeEnd(DBWorker dbWorker) throws SQLException {
 
         Statement statementCountEmployeeEnd = dbWorker.getConnection().createStatement();
@@ -259,8 +270,13 @@ public class CalculationForDB {
 
                 price = resultSetMaxCourse.getInt("course_price");
                 budget = budget + price;
+
+
+                // TODO
                 if (budget > maxBudget) {
-                    return;
+                    budget = budget - price;
+                    closeEffect(dbWorker);
+                    continue;
                 }
 
                 String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
@@ -335,6 +351,7 @@ public class CalculationForDB {
 
                 numberOnCourse++;
                 number++;
+
                 increment = calculationLimitMaxEffect(dbWorker);
                 System.out.println(increment);
 
