@@ -9,6 +9,7 @@ import java.util.Vector;
 
 public class JResultEmployeeStart {
     private DBWorker dbWorker = new DBWorker();
+    private Statement statement = null;
     private DefaultTableModel defaultTableModel = new DefaultTableModel();
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension JTABLE_SIZE = new Dimension(640, 480);
@@ -16,7 +17,7 @@ public class JResultEmployeeStart {
 
     JResultEmployeeStart() {
         try {
-            Statement statement = dbWorker.getConnection()
+            statement = dbWorker.getConnection()
                     .createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM employee_start");
 
@@ -65,6 +66,14 @@ public class JResultEmployeeStart {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                dbWorker.getConnection().close();
+                statement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }

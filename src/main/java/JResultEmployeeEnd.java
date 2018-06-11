@@ -9,6 +9,7 @@ import java.util.Vector;
 
 public class JResultEmployeeEnd {
     private DBWorker dbWorker = new DBWorker();
+    private Statement statement = null;
     private DefaultTableModel defaultTableModel = new DefaultTableModel();
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension JTABLE_SIZE = new Dimension(640, 480);
@@ -67,6 +68,14 @@ public class JResultEmployeeEnd {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                dbWorker.getConnection().close();
+                statement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }

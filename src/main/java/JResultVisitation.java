@@ -9,13 +9,14 @@ import java.util.Vector;
 
 public class JResultVisitation {
     private DBWorker dbWorker = new DBWorker();
+    private Statement statement = null;
     private DefaultTableModel defaultTableModel = new DefaultTableModel();
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension JTABLE_SIZE = new Dimension(640, 480);
 
     JResultVisitation() {
         try {
-            Statement statement = dbWorker.getConnection()
+            statement = dbWorker.getConnection()
                     .createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT v.employee_id, e.employee_name, c.course_name, v.visitation_order\n" +
                     "FROM visitation AS v INNER JOIN employee_start AS e\n" +
@@ -60,9 +61,16 @@ public class JResultVisitation {
             jFrame.add(jScrollPane);
             jFrame.setVisible(true);
 
-
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                dbWorker.getConnection().close();
+                statement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }
