@@ -23,7 +23,15 @@ public class JResultCourse {
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
-                defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                String columnName = resultSetMetaData.getColumnName(column);
+
+                if (columnName.equals("course_name")) {
+                    defaultTableModel.addColumn("Название курса");
+                } else if (columnName.equals("course_price")) {
+                    defaultTableModel.addColumn("Стоимость курса");
+                } else {
+                    defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
+                }
             }
 
             while (resultSet.next()) {

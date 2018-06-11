@@ -19,7 +19,7 @@ public class JResultCompetence {
             statement = dbWorker.getConnection()
                     .createStatement();
             ResultSet resultSet = statement
-                    .executeQuery("SELECT course_id, course_name, course_price FROM course;");
+                    .executeQuery("SELECT competence_id, competence_name, competence_caption FROM competence;");
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
@@ -31,11 +31,11 @@ public class JResultCompetence {
                 for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
                     switch (column) {
                         case 1:
-                            vector.add(Integer.toString(resultSet.getInt("course_id")));
+                            vector.add(Integer.toString(resultSet.getInt("competence_id")));
                         case 2:
-                            vector.add(resultSet.getString("course_name"));
+                            vector.add(resultSet.getString("competence_name"));
                         case 3:
-                            vector.add(Integer.toString(resultSet.getInt("course_price")));
+                            vector.add(resultSet.getString("competence_caption"));
                     }
                 }
                 defaultTableModel.addRow(vector);
@@ -46,7 +46,9 @@ public class JResultCompetence {
 
             jTable.setModel(defaultTableModel);
 
-            JScrollPane jScrollPane = new JScrollPane(jTable);
+            JScrollPane jScrollPane = new JScrollPane(jTable,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
             jFrame.setBounds(DISPLAY_SIZE.width / 2 - JTABLE_SIZE.width / 2,
                     DISPLAY_SIZE.height / 2 - JTABLE_SIZE.height / 2,

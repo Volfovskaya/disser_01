@@ -228,6 +228,9 @@ public class CalculationForDB {
     }
 
     public static void planMaker(DBWorker dbWorker, int maxBudget, int maxNumberOnCourse, int maxNumber) {
+        budget = 0;
+        numberOnCourse = 0;
+        number = 0;
         try {
             while (budget < maxBudget & numberOnCourse < maxNumberOnCourse & number < maxNumber) {
 

@@ -58,10 +58,20 @@ public class JDialogCountPeople extends JFrame {
             try {
                 setCountPeople(Integer.parseInt(jCountPeople.getText()));
                 if (countPeople >= 0) {
-                    Main.countPeopleCourseMain = getCountPeople();
+                    Main.countPeopleMain = getCountPeople();
                     dispose();
                     JDialogMenuResult jDialogMenuResult = new JDialogMenuResult();
+
+
                     jDialogMenuResult.setVisible(true);
+
+
+                    DBWorker dbWorker = new DBWorker();
+                    CalculationForDB.FirstCalculationEffect(dbWorker);
+                    dbWorker = new DBWorker();
+                    CalculationForDB.planMaker(dbWorker, Main.budgetMain, Main.countPeopleCourseMain, Main.countPeopleMain);
+
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Введите корректное число >= 0!");
                 }

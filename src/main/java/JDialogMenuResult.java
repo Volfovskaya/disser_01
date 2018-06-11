@@ -1,15 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class JDialogMenuResult extends JFrame {
+    DBWorker dbWorker = new DBWorker();
+
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension FRAME_SIZE = new Dimension(400, 400);
     private static final Dimension TEXT_FIELD_SIZE = new Dimension(280, 50);
     private static final Dimension BUTTON_SIZE = new Dimension(250, 40);
 
+
     JDialogMenuResult() {
+
         this.setLayout(null);
 
         this.setBounds(DISPLAY_SIZE.width / 2 - FRAME_SIZE.width / 2,
@@ -41,12 +43,7 @@ public class JDialogMenuResult extends JFrame {
         jButtonEmployeeStart.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
                 60, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
-        jButtonEmployeeStart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new JResultEmployeeStart();
-            }
-        });
+        jButtonEmployeeStart.addActionListener(e -> new JResultEmployeeStart());
 
         JButton jButtonEmployeeEnd = new JButton("Конечные данные сотрудников");
         jButtonEmployeeEnd.setPreferredSize(BUTTON_SIZE);
@@ -54,12 +51,7 @@ public class JDialogMenuResult extends JFrame {
         jButtonEmployeeEnd.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
                 110, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
-        jButtonEmployeeEnd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new JResultEmployeeEnd();
-            }
-        });
+        jButtonEmployeeEnd.addActionListener(e -> new JResultEmployeeEnd());
 
         JButton jButtonVisitation = new JButton("Посещение курсов");
         jButtonVisitation.setPreferredSize(BUTTON_SIZE);
@@ -67,12 +59,7 @@ public class JDialogMenuResult extends JFrame {
         jButtonVisitation.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
                 160, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
-        jButtonVisitation.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new JResultVisitation();
-            }
-        });
+        jButtonVisitation.addActionListener(e -> new JResultVisitation());
 
         JButton jButtonCourse = new JButton("Сведения о курсах");
         jButtonCourse.setPreferredSize(BUTTON_SIZE);
@@ -80,12 +67,7 @@ public class JDialogMenuResult extends JFrame {
         jButtonCourse.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
                 210, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
-        jButtonCourse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new JResultCourse();
-            }
-        });
+        jButtonCourse.addActionListener(e -> new JResultCourse());
 
         JButton jButtonCompetence = new JButton("Сведения о компетенциях");
         jButtonCompetence.setPreferredSize(BUTTON_SIZE);
@@ -93,12 +75,20 @@ public class JDialogMenuResult extends JFrame {
         jButtonCompetence.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
                 260, BUTTON_SIZE.width, BUTTON_SIZE.height);
 
-        jButtonCompetence.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new JResultCompetence();
-            }
+        jButtonCompetence.addActionListener(e -> new JResultCompetence());
+
+        JButton jButtonDialogStart = new JButton("Повторное планирование");
+        jButtonDialogStart.setPreferredSize(BUTTON_SIZE);
+        this.add(jButtonDialogStart);
+        jButtonDialogStart.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
+                310, BUTTON_SIZE.width, BUTTON_SIZE.height);
+
+        jButtonDialogStart.addActionListener(e -> {
+            dispose();
+            new JDialogStart();
+
         });
+
 
     }
 }

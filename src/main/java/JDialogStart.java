@@ -1,12 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 
 public class JDialogStart extends JFrame {
-    protected static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    protected static final Dimension FRAME_SIZE = new Dimension(400, 400);
-    protected static final Dimension TEXT_FIELD_SIZE = new Dimension(250, 100);
-    protected static final Dimension BUTTON_SIZE = new Dimension(200, 40);
+    private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final Dimension FRAME_SIZE = new Dimension(400, 400);
+    private static final Dimension TEXT_FIELD_SIZE = new Dimension(250, 100);
+    private static final Dimension BUTTON_SIZE = new Dimension(200, 40);
+
+    DBWorker dbWorker = new DBWorker();
 
 
 
@@ -21,6 +24,13 @@ public class JDialogStart extends JFrame {
     }
 
     public JDialogStart() {
+
+        CalculationForDB.clearDynamicTables(dbWorker);
+        try {
+            dbWorker.getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         this.setLayout(null);
 

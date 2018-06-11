@@ -20,10 +20,7 @@ public class Main {
 //        CalculationForDB.planMaker(dbWorker, 250, 100, 100);
 
 
-
-
-
-        JDialogStart jDialogStart = new JDialogStart();
+        new JDialogStart();
 
     }
 }
