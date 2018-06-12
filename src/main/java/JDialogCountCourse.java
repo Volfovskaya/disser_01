@@ -73,7 +73,6 @@ public class JDialogCountCourse extends JFrame {
 
                 JOptionPane.showMessageDialog(null, "Ошибка");
             }
-            System.out.println("Получены люди на курсе: " + countPeopleCourse);
         });
     }
 }

@@ -24,7 +24,6 @@ public class CalculationForDB {
     private static double effect;
 
     private static int budget = 0;
-    private static int numberOnCourse = 0;
     private static int number = 0;
 
     private static int increment = 0;
@@ -153,11 +152,11 @@ public class CalculationForDB {
 
     }
 
-    private static void deleteEffect(DBWorker dbWorker) throws SQLException {
-
-        String deleteEffectOfCourse = "UPDATE effect SET effect.effect = ? WHERE course_id = ?;";
+    private static void changeEffect(DBWorker dbWorker) throws SQLException {
+        effect = -1;
+        String deleteEffectOfCourse = "UPDATE effect SET effect.effect = ? WHERE effect.course_id = ?;";
         PreparedStatement preparedStatement = dbWorker.getConnection().prepareStatement(deleteEffectOfCourse);
-        preparedStatement.setDouble(1, -1);
+        preparedStatement.setDouble(1, effect);
         preparedStatement.setInt(2, course_id);
         preparedStatement.executeUpdate();
 
@@ -200,7 +199,7 @@ public class CalculationForDB {
                         "VALUE (?,?,?)");
         preparedStatementInsertVisitation.setInt(1, course_id);
         preparedStatementInsertVisitation.setInt(2, employee_id);
-        preparedStatementInsertVisitation.setInt(3, number + 1);
+        preparedStatementInsertVisitation.setInt(3, number);
         preparedStatementInsertVisitation.executeUpdate();
     }
 
@@ -255,10 +254,9 @@ public class CalculationForDB {
 
     public static void planMaker(DBWorker dbWorker, int maxBudget, int maxNumberOnCourse, int maxNumber) {
         budget = 0;
-        numberOnCourse = 0;
-        number = 0;
+        number = 1;
         try {
-            while (budget < maxBudget & numberOnCourse < maxNumberOnCourse & number < maxNumber) {
+            while (budget <= maxBudget) {
 
                 Statement statement = dbWorker.getConnection().createStatement();
                 ResultSet resultSetMaxEffect = statement.executeQuery("SELECT effect.course_id, effect.employee_id, MAX(effect) " +
@@ -286,29 +284,24 @@ public class CalculationForDB {
                 price = resultSetMaxCourse.getInt("course_price");
                 budget = budget + price;
 
-                switch (course_id) {
-                    case 3:
-                        course3++;
-                    case 4:
-                        course4++;
-                    case 5:
-                        course5++;
-                    case 6:
-                        course6++;
-                }
-                if (course3 > maxNumberOnCourse) {
-
-                }
-
-
-                // TODO
                 if (budget > maxBudget) {
                     budget = budget - price;
                     closeEffect(dbWorker);
                     continue;
                 }
 
+                dbWorker = new DBWorker();
 
+                Statement statementNumber = dbWorker.getConnection().createStatement();
+                ResultSet resultNumber = statementNumber.executeQuery("SELECT COUNT(DISTINCT employee_id) FROM visitation;");
+                resultNumber.next();
+                int numberCourse = resultNumber.getInt("COUNT(DISTINCT employee_id)");
+                numberCourse++;
+                if (numberCourse > maxNumber) {
+                    return;
+                }
+
+                dbWorker = new DBWorker();
 
                 String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
                         "COUNT(employee_id) FROM employee_end WHERE employee_id = " + employee_id + " \n" +
@@ -380,8 +373,18 @@ public class CalculationForDB {
                 }
 
 
-                numberOnCourse++;
                 number++;
+
+                switch (course_id) {
+                    case 3:
+                        course3++;
+                    case 4:
+                        course4++;
+                    case 5:
+                        course5++;
+                    case 6:
+                        course6++;
+                }
 
                 increment = calculationLimitMaxEffect(dbWorker);
                 System.out.println(increment);

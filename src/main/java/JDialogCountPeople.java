@@ -79,7 +79,6 @@ public class JDialogCountPeople extends JFrame {
 
                 JOptionPane.showMessageDialog(null, "Ошибка ввода");
             }
-            System.out.println("Получены люди: " + countPeople);
         });
 
     }
