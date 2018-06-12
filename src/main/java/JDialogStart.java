@@ -88,10 +88,14 @@ public class JDialogStart extends JFrame {
                     jDialogCountCourse.setVisible(true);
                     dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Введите корректное число >= 0!");
+                    JOptionPane.showMessageDialog(null,
+                            "Введите корректное число >= 0!",
+                            "Ошибка", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (NumberFormatException e1) {
-                JOptionPane.showMessageDialog(null, "Ошибка");
+                JOptionPane.showMessageDialog(null,
+                        "Введите корректное число (int)",
+                        "Ошибка", JOptionPane.WARNING_MESSAGE);
             }
             System.out.println("Получен бюджет: " + budget);
         });

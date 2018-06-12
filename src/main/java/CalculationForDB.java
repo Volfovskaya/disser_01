@@ -28,10 +28,6 @@ public class CalculationForDB {
 
     private static int increment = 0;
 
-    private static int course3 = 0;
-    private static int course4 = 0;
-    private static int course5 = 0;
-    private static int course6 = 0;
 
     public static void clearDynamicTables(DBWorker dbWorker) {
         try {
@@ -152,7 +148,7 @@ public class CalculationForDB {
 
     }
 
-    private static void changeEffect(DBWorker dbWorker) throws SQLException {
+    private static void checkEffect(DBWorker dbWorker) throws SQLException {
         effect = -1;
         String deleteEffectOfCourse = "UPDATE effect SET effect.effect = ? WHERE effect.course_id = ?;";
         PreparedStatement preparedStatement = dbWorker.getConnection().prepareStatement(deleteEffectOfCourse);
@@ -290,6 +286,7 @@ public class CalculationForDB {
                     continue;
                 }
 
+
                 dbWorker = new DBWorker();
 
                 Statement statementNumber = dbWorker.getConnection().createStatement();
@@ -375,16 +372,6 @@ public class CalculationForDB {
 
                 number++;
 
-                switch (course_id) {
-                    case 3:
-                        course3++;
-                    case 4:
-                        course4++;
-                    case 5:
-                        course5++;
-                    case 6:
-                        course6++;
-                }
 
                 increment = calculationLimitMaxEffect(dbWorker);
                 System.out.println(increment);
