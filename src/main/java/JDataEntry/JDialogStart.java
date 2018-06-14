@@ -1,3 +1,9 @@
+package JDataEntry;
+
+import Code.CalculationForDB;
+import Code.DBWorker;
+import Code.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;

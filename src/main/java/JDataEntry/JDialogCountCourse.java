@@ -1,3 +1,7 @@
+package JDataEntry;
+
+import Code.Main;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,3 +1,7 @@
+package JDataEntry;
+
+import Code.DBWorker;
+
 import javax.swing.*;
 import java.awt.*;
 

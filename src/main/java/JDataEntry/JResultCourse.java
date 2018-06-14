@@ -1,3 +1,7 @@
+package JDataEntry;
+
+import Code.DBWorker;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -7,39 +11,28 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-public class JResultEmployeeEnd {
+public class JResultCourse {
     private DBWorker dbWorker = new DBWorker();
     private Statement statement = null;
     private DefaultTableModel defaultTableModel = new DefaultTableModel();
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension JTABLE_SIZE = new Dimension(640, 480);
 
-
-    JResultEmployeeEnd() {
+    JResultCourse() {
         try {
             statement = dbWorker.getConnection()
                     .createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT s.employee_id, s.employee_name," +
-                    " s.employee_position, e.employee_pc5, e.employee_pc6, e.employee_pc15\n" +
-                    "FROM employee_start AS s\n" +
-                    "RIGHT JOIN employee_end AS e\n" +
-                    "ON s.employee_id = e.employee_id ORDER BY s.employee_id;");
+            ResultSet resultSet = statement
+                    .executeQuery("SELECT course_id, course_name, course_price FROM course;");
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
-                String columnName;
-                columnName = resultSetMetaData.getColumnName(column);
+                String columnName = resultSetMetaData.getColumnName(column);
 
-                if (columnName.equals("employee_name")) {
-                    defaultTableModel.addColumn("Имя сотрудника");
-                } else if (columnName.equals("employee_position")) {
-                    defaultTableModel.addColumn("Должность сотрудника");
-                } else if (columnName.equals("employee_pc5")) {
-                    defaultTableModel.addColumn("ПК-5");
-                } else if (columnName.equals("employee_pc6")) {
-                    defaultTableModel.addColumn("ПК-6");
-                } else if (columnName.equals("employee_pc15")) {
-                    defaultTableModel.addColumn("ПК-15");
+                if (columnName.equals("course_name")) {
+                    defaultTableModel.addColumn("Название курса");
+                } else if (columnName.equals("course_price")) {
+                    defaultTableModel.addColumn("Стоимость курса");
                 } else {
                     defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
                 }
@@ -50,25 +43,18 @@ public class JResultEmployeeEnd {
                 for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
                     switch (column) {
                         case 1:
-                            vector.add(Integer.toString(resultSet.getInt("employee_id")));
+                            vector.add(Integer.toString(resultSet.getInt("course_id")));
                         case 2:
-                            vector.add(resultSet.getString("employee_name"));
+                            vector.add(resultSet.getString("course_name"));
                         case 3:
-                            vector.add(resultSet.getString("employee_position"));
-                        case 4:
-                            vector.add(Integer.toString(resultSet.getInt("employee_pc5")));
-                        case 5:
-                            vector.add(Integer.toString(resultSet.getInt("employee_pc6")));
-                        case 6:
-                            vector.add(Integer.toString(resultSet.getInt("employee_pc15")));
+                            vector.add(Integer.toString(resultSet.getInt("course_price")));
                     }
                 }
                 defaultTableModel.addRow(vector);
             }
 
-            JFrame jFrame = new JFrame("Данные сотрудников после обучения");
+            JFrame jFrame = new JFrame("Сведения о курсах");
             JTable jTable = new JTableWithoutEdit();
-
 
             jTable.setModel(defaultTableModel);
 
@@ -80,7 +66,6 @@ public class JResultEmployeeEnd {
 
             jFrame.add(jScrollPane);
             jFrame.setVisible(true);
-
 
         } catch (SQLException e) {
             e.printStackTrace();

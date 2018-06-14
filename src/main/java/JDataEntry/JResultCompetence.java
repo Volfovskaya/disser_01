@@ -1,3 +1,7 @@
+package JDataEntry;
+
+import Code.DBWorker;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -7,40 +11,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
-public class JResultVisitation {
+public class JResultCompetence {
     private DBWorker dbWorker = new DBWorker();
     private Statement statement = null;
     private DefaultTableModel defaultTableModel = new DefaultTableModel();
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension JTABLE_SIZE = new Dimension(640, 480);
 
-    JResultVisitation() {
+    JResultCompetence() {
         try {
             statement = dbWorker.getConnection()
                     .createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT v.employee_id, e.employee_name, c.course_name, v.visitation_order\n" +
-                    "FROM visitation AS v INNER JOIN employee_start AS e\n" +
-                    "ON v.employee_id = e.employee_id\n" +
-                    "INNER JOIN course AS c\n" +
-                    "ON c.course_id = v.course_id\n" +
-                    "ORDER BY v.visitation_order;");
+            ResultSet resultSet = statement
+                    .executeQuery("SELECT competence_id, competence_name, competence_caption FROM competence;");
 
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
                 String columnName = resultSetMetaData.getColumnName(column);
-                switch (columnName) {
-                    case "employee_name":
-                        defaultTableModel.addColumn("Имя сотрудника");
-                        break;
-                    case "course_name":
-                        defaultTableModel.addColumn("Название курса");
-                        break;
-                    case "visitation_order":
-                        defaultTableModel.addColumn("Порядок посещения");
-                        break;
-                    default:
-                        defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
-                        break;
+
+                if (columnName.equals("competence_name")) {
+                    defaultTableModel.addColumn("Название компетенции");
+                } else if (columnName.equals("competence_caption")) {
+                    defaultTableModel.addColumn("Описание компетенции");
+                } else {
+                    defaultTableModel.addColumn(resultSetMetaData.getColumnName(column));
                 }
             }
 
@@ -49,24 +43,24 @@ public class JResultVisitation {
                 for (int column = 1; column <= resultSetMetaData.getColumnCount(); column++) {
                     switch (column) {
                         case 1:
-                            vector.add(Integer.toString(resultSet.getInt("employee_id")));
+                            vector.add(Integer.toString(resultSet.getInt("competence_id")));
                         case 2:
-                            vector.add(resultSet.getString("employee_name"));
+                            vector.add(resultSet.getString("competence_name"));
                         case 3:
-                            vector.add(resultSet.getString("course_name"));
-                        case 4:
-                            vector.add(Integer.toString(resultSet.getInt("visitation_order")));
+                            vector.add(resultSet.getString("competence_caption"));
                     }
                 }
                 defaultTableModel.addRow(vector);
             }
 
-            JFrame jFrame = new JFrame("Порядок посещения курсов сотрудниками");
+            JFrame jFrame = new JFrame("Сведения о компетенциях");
             JTable jTable = new JTableWithoutEdit();
 
             jTable.setModel(defaultTableModel);
 
-            JScrollPane jScrollPane = new JScrollPane(jTable);
+            JScrollPane jScrollPane = new JScrollPane(jTable,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
             jFrame.setBounds(DISPLAY_SIZE.width / 2 - JTABLE_SIZE.width / 2,
                     DISPLAY_SIZE.height / 2 - JTABLE_SIZE.height / 2,

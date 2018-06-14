@@ -1,3 +1,5 @@
+package JDataEntry;
+
 import javax.swing.*;
 
 public class JTableWithoutEdit extends JTable {

@@ -1,3 +1,7 @@
+package JDataEntry;
+
+import Code.DBWorker;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;

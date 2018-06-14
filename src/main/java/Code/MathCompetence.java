@@ -1,3 +1,5 @@
+package Code;
+
 public class MathCompetence {
 
     public static double getEffect(int pc5Employee, int pc6Employee, int pc15Employee,
