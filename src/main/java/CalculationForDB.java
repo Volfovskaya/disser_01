@@ -375,7 +375,6 @@ public class CalculationForDB {
 
                 increment = calculationLimitMaxEffect(dbWorker);
                 System.out.println(increment);
-
             }
 
 

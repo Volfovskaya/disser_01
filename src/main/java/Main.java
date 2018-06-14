@@ -3,6 +3,10 @@ public class Main {
     public static int countPeopleCourseMain;
     public static int countPeopleMain;
 
+    /**
+     * Version 1.0
+     */
+
 
 
     public static void main(String[] args) {
