@@ -79,7 +79,7 @@ public class JWelcomeASPRPK extends JFrame {
         jButtonAcceptMath.addActionListener(e -> {
             if (mathMax.isSelected()) {
                 dispose();
-                new JWelcomeLimits();
+                new JWelcomeCoursePrice();
             }
         });
 

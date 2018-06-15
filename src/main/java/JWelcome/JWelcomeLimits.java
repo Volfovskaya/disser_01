@@ -8,9 +8,9 @@ public class JWelcomeLimits extends JFrame {
 
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension FRAME_SIZE = new Dimension(400, 400);
-    private static final Dimension TEXT_FIELD_SIZE = new Dimension(350, 40);
+    private static final Dimension TEXT_FIELD_SIZE = new Dimension(350, 20);
     private static final Dimension PANEL_BUTTON_SIZE = new Dimension(380, 150);
-    private static final Dimension RADIO_BUTTON_SIZE = new Dimension(350, 40);
+    private static final Dimension RADIO_BUTTON_SIZE = new Dimension(350, 30);
     private static final Dimension BUTTON_SIZE = new Dimension(200, 40);
 
     public JWelcomeLimits() {
@@ -34,38 +34,34 @@ public class JWelcomeLimits extends JFrame {
         jTextMathSet.setBackground(new Color(238, 238, 238));
         this.add(jTextMathSet);
         jTextMathSet.setBounds(FRAME_SIZE.width / 2 - TEXT_FIELD_SIZE.width / 2,
-                10,
+                5,
                 TEXT_FIELD_SIZE.width,
                 TEXT_FIELD_SIZE.height);
 
-//        ButtonGroup buttonGroup = new ButtonGroup();
 
-        JCheckBox mathMax = new JCheckBox("Общее число человек", false);
-        mathMax.setVisible(true);
-//        buttonGroup.add(mathMax);
+        JCheckBox allPeople = new JCheckBox("Общее число человек", false);
+        allPeople.setVisible(true);
 
-        mathMax.setBounds(5, 10, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
+        allPeople.setBounds(5, 10, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JCheckBox mathMin = new JCheckBox("Число обучающихся на курсе", false);
-        mathMin.setVisible(true);
-//        buttonGroup.add(mathMin);
+        JCheckBox peopleOnCourse = new JCheckBox("Число обучающихся на курсе", false);
+        peopleOnCourse.setVisible(true);
 
-        mathMin.setBounds(5, 50, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
+        peopleOnCourse.setBounds(5, 40, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JCheckBox mathAVG = new JCheckBox("Максимизация приращения для уровня", true);
+        JCheckBox mathAVG = new JCheckBox("Число курсов на сотрудника", true);
         mathAVG.setVisible(true);
-//        buttonGroup.add(mathAVG);
 
-        mathAVG.setBounds(5, 90, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
+        mathAVG.setBounds(5, 70, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(mathMax);
-        buttonPanel.add(mathMin);
+        buttonPanel.add(allPeople);
+        buttonPanel.add(peopleOnCourse);
         buttonPanel.add(mathAVG);
 
         this.add(buttonPanel);
         buttonPanel.setBounds(FRAME_SIZE.width / 2 - TEXT_FIELD_SIZE.width / 2,
-                100,
+                30,
                 PANEL_BUTTON_SIZE.width,
                 PANEL_BUTTON_SIZE.height);
 

@@ -3,7 +3,7 @@ package JWelcome;
 import javax.swing.*;
 import java.awt.*;
 
-public class JWelcomeCoursePrice extends JFrame {
+public class JWelcomeBudget extends JFrame {
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension FRAME_SIZE = new Dimension(400, 400);
     private static final Dimension TEXT_FIELD_SIZE = new Dimension(350, 40);
@@ -11,8 +11,8 @@ public class JWelcomeCoursePrice extends JFrame {
     private static final Dimension RADIO_BUTTON_SIZE = new Dimension(350, 40);
     private static final Dimension BUTTON_SIZE = new Dimension(200, 40);
 
+    JWelcomeBudget() {
 
-    JWelcomeCoursePrice() {
         this.setLayout(null);
 
         this.setBounds(DISPLAY_SIZE.width / 2 - FRAME_SIZE.width / 2,
@@ -21,13 +21,13 @@ public class JWelcomeCoursePrice extends JFrame {
         this.setMinimumSize(this.getSize());
         this.setMaximumSize(this.getSize());
 
-        this.setTitle("АСПРПК: стоимости курсов");
+        this.setTitle("АСПРПК: ограничение на бюджет");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.setVisible(true);
 
 
-        JTextArea jTextMathSet = new JTextArea("Одинаковая или разная стоимость курсов?");
+        JTextArea jTextMathSet = new JTextArea("Есть ограничение на бюджет?");
         jTextMathSet.setEditable(false);
         jTextMathSet.setBackground(new Color(238, 238, 238));
         this.add(jTextMathSet);
@@ -38,13 +38,13 @@ public class JWelcomeCoursePrice extends JFrame {
 
         ButtonGroup buttonGroup = new ButtonGroup();
 
-        JRadioButton somePrice = new JRadioButton("Одинаковая", false);
+        JRadioButton somePrice = new JRadioButton("Да", false);
         somePrice.setVisible(true);
         buttonGroup.add(somePrice);
 
         somePrice.setBounds(5, 10, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JRadioButton differentPrice = new JRadioButton("Разная", false);
+        JRadioButton differentPrice = new JRadioButton("Нет", false);
         differentPrice.setVisible(true);
         buttonGroup.add(differentPrice);
 
@@ -76,7 +76,6 @@ public class JWelcomeCoursePrice extends JFrame {
                 new JWelcomeLimits();
             }
         });
+
     }
-
-
 }
