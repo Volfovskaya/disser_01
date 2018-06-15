@@ -3,7 +3,9 @@ package JWelcome;
 import javax.swing.*;
 import java.awt.*;
 
-public class JWelcomeASPRPK extends JFrame {
+public class JWelcomeLimits extends JFrame {
+
+
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension FRAME_SIZE = new Dimension(400, 400);
     private static final Dimension TEXT_FIELD_SIZE = new Dimension(350, 40);
@@ -11,7 +13,7 @@ public class JWelcomeASPRPK extends JFrame {
     private static final Dimension RADIO_BUTTON_SIZE = new Dimension(350, 40);
     private static final Dimension BUTTON_SIZE = new Dimension(200, 40);
 
-    public JWelcomeASPRPK() {
+    public JWelcomeLimits() {
 
         this.setLayout(null);
 
@@ -21,13 +23,13 @@ public class JWelcomeASPRPK extends JFrame {
         this.setMinimumSize(this.getSize());
         this.setMaximumSize(this.getSize());
 
-        this.setTitle("АСПРПК");
+        this.setTitle("АСПРПК: выбор ограничений");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.setVisible(true);
 
 
-        JTextArea jTextMathSet = new JTextArea("Выберите математическую постановку\nзадачи:");
+        JTextArea jTextMathSet = new JTextArea("Установите ограничения:");
         jTextMathSet.setEditable(false);
         jTextMathSet.setBackground(new Color(238, 238, 238));
         this.add(jTextMathSet);
@@ -36,23 +38,23 @@ public class JWelcomeASPRPK extends JFrame {
                 TEXT_FIELD_SIZE.width,
                 TEXT_FIELD_SIZE.height);
 
-        ButtonGroup buttonGroup = new ButtonGroup();
+//        ButtonGroup buttonGroup = new ButtonGroup();
 
-        JRadioButton mathMax = new JRadioButton("Максимизация суммарного приращения", false);
+        JCheckBox mathMax = new JCheckBox("Общее число человек", false);
         mathMax.setVisible(true);
-        buttonGroup.add(mathMax);
+//        buttonGroup.add(mathMax);
 
         mathMax.setBounds(5, 10, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JRadioButton mathMin = new JRadioButton("Минимизация отклонения от уровня", false);
+        JCheckBox mathMin = new JCheckBox("Число обучающихся на курсе", false);
         mathMin.setVisible(true);
-        buttonGroup.add(mathMin);
+//        buttonGroup.add(mathMin);
 
         mathMin.setBounds(5, 50, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JRadioButton mathAVG = new JRadioButton("Максимизация приращения для уровня", true);
+        JCheckBox mathAVG = new JCheckBox("Максимизация приращения для уровня", true);
         mathAVG.setVisible(true);
-        buttonGroup.add(mathAVG);
+//        buttonGroup.add(mathAVG);
 
         mathAVG.setBounds(5, 90, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
@@ -68,22 +70,6 @@ public class JWelcomeASPRPK extends JFrame {
                 PANEL_BUTTON_SIZE.height);
 
         buttonPanel.setVisible(true);
-        JButton jButtonAcceptMath = new JButton("Принять постановку задачи");
-        jButtonAcceptMath.setPreferredSize(BUTTON_SIZE);
-        this.add(jButtonAcceptMath);
-
-        jButtonAcceptMath.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
-                250, BUTTON_SIZE.width, BUTTON_SIZE.height);
-
-
-        jButtonAcceptMath.addActionListener(e -> {
-            if (mathMax.isSelected()) {
-                dispose();
-                new JWelcomeLimits();
-            }
-        });
-
-
 
     }
 

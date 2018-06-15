@@ -1,6 +1,7 @@
 package Code;
 
 import JDataEntry.JDialogStart;
+import JWelcome.JWelcomeASPRPK;
 
 public class Main {
     public static int budgetMain;
@@ -24,8 +25,12 @@ public class Main {
 //
 //        Code.CalculationForDB.planMaker(dbWorker, 250, 100, 100);
 
+        new JWelcomeASPRPK();
 
-        new JDialogStart();
+        /**
+         * new JDialogStart();
+         */
+
 
     }
 }

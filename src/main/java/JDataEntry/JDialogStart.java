@@ -18,7 +18,6 @@ public class JDialogStart extends JFrame {
     DBWorker dbWorker = new DBWorker();
 
 
-
     private int budget = 0;
 
     public int getBudget() {
@@ -46,15 +45,11 @@ public class JDialogStart extends JFrame {
         this.setMinimumSize(this.getSize());
         this.setMaximumSize(this.getSize());
 
-        this.setTitle("АСПРПК");
+        this.setTitle("АСПРПК: введите ограничение на бюджет");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
-
-        JTextArea jTextAreaWelcome = new JTextArea("Добро пожаловать в АСПРПК!\n" +
-                "Выберите ограничения на бюджет,\nколичество обучаемых на одном \n" +
-                "курсе и общее количество обучаемых.\n" +
-                "Введите ограничение на бюджет:");
+        JTextArea jTextAreaWelcome = new JTextArea("Введите ограничение на бюджет:");
 
         jTextAreaWelcome.setEditable(false);
 
