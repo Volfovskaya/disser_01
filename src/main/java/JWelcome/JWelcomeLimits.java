@@ -69,7 +69,7 @@ public class JWelcomeLimits extends JFrame {
 
         buttonPanel.setVisible(true);
 
-        JButton jButtonAcceptMath = new JButton("Принять условие");
+        JButton jButtonAcceptMath = new JButton("Принять ограничения");
         jButtonAcceptMath.setPreferredSize(BUTTON_SIZE);
         this.add(jButtonAcceptMath);
 
