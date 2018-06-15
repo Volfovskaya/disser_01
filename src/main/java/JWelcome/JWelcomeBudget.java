@@ -38,22 +38,22 @@ public class JWelcomeBudget extends JFrame {
 
         ButtonGroup buttonGroup = new ButtonGroup();
 
-        JRadioButton somePrice = new JRadioButton("Да", false);
-        somePrice.setVisible(true);
-        buttonGroup.add(somePrice);
+        JRadioButton yesBudget = new JRadioButton("Да", false);
+        yesBudget.setVisible(true);
+        buttonGroup.add(yesBudget);
 
-        somePrice.setBounds(5, 10, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
+        yesBudget.setBounds(5, 10, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JRadioButton differentPrice = new JRadioButton("Нет", false);
-        differentPrice.setVisible(true);
-        buttonGroup.add(differentPrice);
+        JRadioButton noBudget = new JRadioButton("Нет", false);
+        noBudget.setVisible(true);
+        buttonGroup.add(noBudget);
 
-        differentPrice.setBounds(5, 50, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
+        noBudget.setBounds(5, 50, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(somePrice);
-        buttonPanel.add(differentPrice);
+        buttonPanel.add(yesBudget);
+        buttonPanel.add(noBudget);
 
         this.add(buttonPanel);
         buttonPanel.setBounds(FRAME_SIZE.width / 2 - TEXT_FIELD_SIZE.width / 2,
@@ -62,7 +62,7 @@ public class JWelcomeBudget extends JFrame {
                 PANEL_BUTTON_SIZE.height);
 
         buttonPanel.setVisible(true);
-        JButton jButtonAcceptMath = new JButton("Принять стоимость курсов");
+        JButton jButtonAcceptMath = new JButton("Принять условие");
         jButtonAcceptMath.setPreferredSize(BUTTON_SIZE);
         this.add(jButtonAcceptMath);
 
@@ -71,9 +71,9 @@ public class JWelcomeBudget extends JFrame {
 
 
         jButtonAcceptMath.addActionListener(e -> {
-            if (differentPrice.isSelected()) {
+            if (yesBudget.isSelected()) {
                 dispose();
-                new JWelcomeLimits();
+                new JWelcomeCoursePrice();
             }
         });
 

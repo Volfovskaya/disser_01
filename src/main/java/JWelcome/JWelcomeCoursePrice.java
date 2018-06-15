@@ -62,7 +62,7 @@ public class JWelcomeCoursePrice extends JFrame {
                 PANEL_BUTTON_SIZE.height);
 
         buttonPanel.setVisible(true);
-        JButton jButtonAcceptMath = new JButton("Принять стоимость курсов");
+        JButton jButtonAcceptMath = new JButton("Принять условие");
         jButtonAcceptMath.setPreferredSize(BUTTON_SIZE);
         this.add(jButtonAcceptMath);
 
@@ -73,7 +73,7 @@ public class JWelcomeCoursePrice extends JFrame {
         jButtonAcceptMath.addActionListener(e -> {
             if (differentPrice.isSelected()) {
                 dispose();
-                new JWelcomeLimits();
+                new JWelcomeCompetence();
             }
         });
     }
