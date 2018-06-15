@@ -1,5 +1,7 @@
 package JWelcome;
 
+import JDataEntry.JDialogStart;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -49,15 +51,15 @@ public class JWelcomeLimits extends JFrame {
 
         peopleOnCourse.setBounds(5, 40, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JCheckBox mathAVG = new JCheckBox("Число курсов на сотрудника", true);
-        mathAVG.setVisible(true);
+        JCheckBox courseOnEmployee = new JCheckBox("Число курсов на сотрудника", true);
+        courseOnEmployee.setVisible(true);
 
-        mathAVG.setBounds(5, 70, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
+        courseOnEmployee.setBounds(5, 70, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(allPeople);
         buttonPanel.add(peopleOnCourse);
-        buttonPanel.add(mathAVG);
+        buttonPanel.add(courseOnEmployee);
 
         this.add(buttonPanel);
         buttonPanel.setBounds(FRAME_SIZE.width / 2 - TEXT_FIELD_SIZE.width / 2,
@@ -66,6 +68,21 @@ public class JWelcomeLimits extends JFrame {
                 PANEL_BUTTON_SIZE.height);
 
         buttonPanel.setVisible(true);
+
+        JButton jButtonAcceptMath = new JButton("Принять условие");
+        jButtonAcceptMath.setPreferredSize(BUTTON_SIZE);
+        this.add(jButtonAcceptMath);
+
+        jButtonAcceptMath.setBounds(FRAME_SIZE.width / 2 - BUTTON_SIZE.width / 2,
+                250, BUTTON_SIZE.width, BUTTON_SIZE.height);
+
+
+        jButtonAcceptMath.addActionListener(e -> {
+            if (allPeople.isSelected() && peopleOnCourse.isSelected()) {
+                dispose();
+                new JDialogStart();
+            }
+        });
 
     }
 
