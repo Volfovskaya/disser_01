@@ -9,6 +9,12 @@ public class DBWorker {
     private final static String USERNAME = "root";
     private final static String PASSWORD = "02241995";
 
+
+
+    public static String getHashPsswd() {
+        return Integer.toString(PASSWORD.hashCode());
+    }
+
     private Connection connection;
 
     public Connection getConnection() {
