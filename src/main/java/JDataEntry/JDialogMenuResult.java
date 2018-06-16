@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class JDialogMenuResult extends JFrame {
-    DBWorker dbWorker = new DBWorker();
 
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
     private static final Dimension FRAME_SIZE = new Dimension(400, 400);
@@ -92,10 +91,6 @@ public class JDialogMenuResult extends JFrame {
             new JDialogStart();
 
         });
-
-        DBWorker dbWorker = new DBWorker();
-
-
 
     }
 }

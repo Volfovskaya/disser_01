@@ -6,6 +6,7 @@ import Code.Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Calendar;
 
 public class JDialogCountPeople extends JFrame {
     protected static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
@@ -75,7 +76,23 @@ public class JDialogCountPeople extends JFrame {
                     DBWorker dbWorker = new DBWorker();
                     CalculationForDB.FirstCalculationEffect(dbWorker);
                     dbWorker = new DBWorker();
-                    CalculationForDB.planMaker(dbWorker, Main.budgetMain, Main.countPeopleCourseMain, Main.countPeopleMain);
+
+                    /**
+                     * Change method planMaker to get the limit effect
+                     */
+
+                    CalculationForDB.planMaker(dbWorker,
+                            Main.budgetMain,
+                            Main.countPeopleCourseMain,
+                            Main.countPeopleMain);
+
+//                    CalculationForDB.planMaker(dbWorker,
+//                            Main.budgetMain,
+//                            Main.countPeopleCourseMain,
+//                            Main.countPeopleMain,
+//                            "Минимальный критерий");
+
+
 
 
                 } else {
