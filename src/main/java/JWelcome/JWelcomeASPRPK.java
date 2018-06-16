@@ -5,10 +5,10 @@ import java.awt.*;
 
 public class JWelcomeASPRPK extends JFrame {
     private static final Dimension DISPLAY_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    private static final Dimension FRAME_SIZE = new Dimension(400, 400);
+    private static final Dimension FRAME_SIZE = new Dimension(500, 400);
     private static final Dimension TEXT_FIELD_SIZE = new Dimension(350, 40);
     private static final Dimension PANEL_BUTTON_SIZE = new Dimension(380, 150);
-    private static final Dimension RADIO_BUTTON_SIZE = new Dimension(350, 40);
+    private static final Dimension RADIO_BUTTON_SIZE = new Dimension(450, 40);
     private static final Dimension BUTTON_SIZE = new Dimension(200, 40);
 
     public JWelcomeASPRPK() {
@@ -44,13 +44,13 @@ public class JWelcomeASPRPK extends JFrame {
 
         mathMax.setBounds(5, 10, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JRadioButton mathMin = new JRadioButton("Минимизация отклонения от уровня", false);
+        JRadioButton mathMin = new JRadioButton("Минимизация отклонения от заданного уровня", false);
         mathMin.setVisible(true);
         buttonGroup.add(mathMin);
 
         mathMin.setBounds(5, 50, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
 
-        JRadioButton mathAVG = new JRadioButton("Максимизация приращения для уровня", true);
+        JRadioButton mathAVG = new JRadioButton("Максимизация приращения для заданного уровня", true);
         mathAVG.setVisible(true);
         buttonGroup.add(mathAVG);
 

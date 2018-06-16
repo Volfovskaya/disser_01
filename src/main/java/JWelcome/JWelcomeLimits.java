@@ -41,7 +41,7 @@ public class JWelcomeLimits extends JFrame {
                 TEXT_FIELD_SIZE.height);
 
 
-        JCheckBox allPeople = new JCheckBox("Общее число человек", false);
+        JCheckBox allPeople = new JCheckBox("Общее число обучаемых", false);
         allPeople.setVisible(true);
 
         allPeople.setBounds(5, 10, RADIO_BUTTON_SIZE.width, RADIO_BUTTON_SIZE.height);
