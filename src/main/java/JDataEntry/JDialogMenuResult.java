@@ -93,6 +93,9 @@ public class JDialogMenuResult extends JFrame {
 
         });
 
+        DBWorker dbWorker = new DBWorker();
+
+
 
     }
 }

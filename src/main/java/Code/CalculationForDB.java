@@ -201,7 +201,7 @@ public class CalculationForDB {
         preparedStatementInsertVisitation.executeUpdate();
     }
 
-    private static int calculationLimitMaxEffect(DBWorker dbWorker) throws SQLException {
+    public static int calculationLimitMaxEffect(DBWorker dbWorker) throws SQLException {
         int id;
         int pc5start;
         int pc6start;
@@ -327,9 +327,6 @@ public class CalculationForDB {
                     pc15Employee = resultSetCurrentEmployee.getInt("employee_pc15");
                 }
 
-                System.out.println("Бюджет: " + budget);
-
-
                 if (pc5Employee < pc5EndCourse) {
                     pc5Employee = pc5EndCourse;
                 }
@@ -376,7 +373,8 @@ public class CalculationForDB {
 
 
                 increment = calculationLimitMaxEffect(dbWorker);
-                System.out.println(increment);
+                System.out.println("Бюджет: " + budget);
+                System.out.println("Приращение: " + increment);
             }
 
 

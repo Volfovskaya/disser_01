@@ -24,12 +24,11 @@ public class Main {
 //        dbWorker = new Code.DBWorker();
 //
 //        Code.CalculationForDB.planMaker(dbWorker, 250, 100, 100);
+        new JDialogStart();
 
-        new JWelcomeASPRPK();
+//        new JWelcomeASPRPK();
 
-        /**
-         * new JDialogStart();
-         */
+
 
 
     }
