@@ -75,6 +75,7 @@ public class JDialogCountPeople extends JFrame {
 
                     DBWorker dbWorker = new DBWorker();
                     CalculationForDB.FirstCalculationEffect(dbWorker);
+
                     dbWorker = new DBWorker();
 
                     /**

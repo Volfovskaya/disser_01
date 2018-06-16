@@ -37,6 +37,8 @@ public class MathCompetence {
                 return effect;
             }
 
+
+
 //            return effect;
             effect = effect / price;
             return effect;

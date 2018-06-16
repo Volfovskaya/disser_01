@@ -414,15 +414,14 @@ public class CalculationForDB {
         try {
             while (budget <= maxBudget) {
 
-//                dbWorker = new DBWorker();
                 Statement statement = dbWorker.getConnection().createStatement();
-                ResultSet resultSetMaxEffect = statement.executeQuery("SELECT effect.course_id, effect.employee_id, MAX(effect) " +
-                        "FROM effect WHERE effect = (SELECT  MAX(effect) FROM effect WHERE effect >= 0)");
+                ResultSet resultSetMaxEffect = statement.executeQuery("SELECT effect.course_id, effect.employee_id, MIN(effect) " +
+                        "FROM effect WHERE effect = (SELECT  MIN(effect) FROM effect WHERE effect >= 0)");
 
                 resultSetMaxEffect.next();
                 course_id = resultSetMaxEffect.getInt("course_id");
                 employee_id = resultSetMaxEffect.getInt("employee_id");
-                effect = resultSetMaxEffect.getDouble("MAX(effect)");
+                effect = resultSetMaxEffect.getDouble("MIN(effect)");
 
                 if (effect == -1 || employee_id == 0 || course_id == 0) {
                     return;
@@ -460,7 +459,6 @@ public class CalculationForDB {
                 }
 
 
-//                dbWorker = new DBWorker();
 
                 Statement statementNumber = dbWorker.getConnection().createStatement();
                 ResultSet resultNumber = statementNumber.executeQuery("SELECT COUNT(DISTINCT employee_id) FROM visitation;");
@@ -471,7 +469,6 @@ public class CalculationForDB {
                     return;
                 }
 
-//                dbWorker = new DBWorker();
 
                 String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
                         "COUNT(employee_id) FROM employee_end WHERE employee_id = " + employee_id + " \n" +
@@ -552,6 +549,10 @@ public class CalculationForDB {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            System.out.println(string);
+            System.out.println("Бюджет: " + budget);
+            System.out.println("Приращение: " + increment);
+
             try {
                 dbWorker.getConnection().close();
             } catch (SQLException e) {
