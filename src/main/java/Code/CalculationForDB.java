@@ -257,7 +257,6 @@ public class CalculationForDB {
         try {
             while (budget <= maxBudget) {
 
-                dbWorker = new DBWorker();
                 Statement statement = dbWorker.getConnection().createStatement();
                 ResultSet resultSetMaxEffect = statement.executeQuery("SELECT effect.course_id, effect.employee_id, MAX(effect) " +
                         "FROM effect WHERE effect = (SELECT  MAX(effect) FROM effect)");
@@ -267,7 +266,7 @@ public class CalculationForDB {
                 employee_id = resultSetMaxEffect.getInt("employee_id");
                 effect = resultSetMaxEffect.getDouble("MAX(effect)");
 
-                if (effect == -1) {
+                if (effect == -1 || employee_id == 0 || course_id == 0) {
                     return;
                 }
 
@@ -277,6 +276,17 @@ public class CalculationForDB {
                 ResultSet resultSetMaxCourse = statement.executeQuery(queryMaxCourse);
 
                 resultSetMaxCourse.next();
+
+                String countCourseSQL = "SELECT COUNT(*) FROM visitation WHERE course_id = " + course_id + ";";
+                Statement statementCountCourse = dbWorker.getConnection().createStatement();
+                ResultSet resultSetCountCourse = statementCountCourse.executeQuery(countCourseSQL);
+                resultSetCountCourse.next();
+                numberOnCourse = resultSetCountCourse.getInt("COUNT(*)");
+                if (numberOnCourse >= maxNumberOnCourse) {
+                    closeEffect(dbWorker);
+                    continue;
+                }
+
                 pc5EndCourse = resultSetMaxCourse.getInt("course_pc5_end");
                 pc6EndCourse = resultSetMaxCourse.getInt("course_pc6_end");
                 pc15EndCourse = resultSetMaxCourse.getInt("course_pc15_end");
@@ -290,19 +300,7 @@ public class CalculationForDB {
                     continue;
                 }
 
-                dbWorker = new DBWorker();
-                String countCourseSQL = "SELECT COUNT(*) FROM visitation WHERE course_id = " + course_id + ";";
-                Statement statementCountCourse = dbWorker.getConnection().createStatement();
-                ResultSet resultSetCountCourse = statementCountCourse.executeQuery(countCourseSQL);
-                resultSetCountCourse.next();
-                numberOnCourse = resultSetCountCourse.getInt("COUNT(*)");
-                if (numberOnCourse >= maxNumberOnCourse) {
-                    closeEffect(dbWorker);
-                    continue;
-                }
 
-
-                dbWorker = new DBWorker();
 
                 Statement statementNumber = dbWorker.getConnection().createStatement();
                 ResultSet resultNumber = statementNumber.executeQuery("SELECT COUNT(DISTINCT employee_id) FROM visitation;");
@@ -313,7 +311,6 @@ public class CalculationForDB {
                     return;
                 }
 
-                dbWorker = new DBWorker();
 
                 String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
                         "COUNT(employee_id) FROM employee_end WHERE employee_id = " + employee_id + " \n" +
@@ -324,6 +321,7 @@ public class CalculationForDB {
 
                 resultSetCurrentEmployee.next();
                 int counterEmployee = resultSetCurrentEmployee.getInt("COUNT(employee_id)");
+
                 if (counterEmployee > 0) {
                     pc5Employee = resultSetCurrentEmployee.getInt("employee_pc5");
                     pc6Employee = resultSetCurrentEmployee.getInt("employee_pc6");
@@ -409,41 +407,24 @@ public class CalculationForDB {
                                  int maxNumberOnCourse,
                                  int maxNumber,
                                  String string) {
+
+
         budget = 0;
         number = 1;
         try {
             while (budget <= maxBudget) {
 
-
-                dbWorker = new DBWorker();
-                Statement statementMinus = dbWorker.getConnection().createStatement();
-                ResultSet resultSetMinus = statementMinus.executeQuery("SELECT COUNT(effect)" +
-                        " FROM effect" +
-                        " WHERE effect = -1;");
-                resultSetMinus.next();
-                int minus = resultSetMinus.getInt("COUNT(effect)");
-
-                Statement statementPlus = dbWorker.getConnection().createStatement();
-                ResultSet resultSetPLus = statementPlus.executeQuery("SELECT COUNT(effect)" +
-                        " FROM effect");
-                resultSetPLus.next();
-                int plus = resultSetMinus.getInt("COUNT(effect)");
-
-                if (minus == plus) {
-                    return;
-                }
-
-
+//                dbWorker = new DBWorker();
                 Statement statement = dbWorker.getConnection().createStatement();
                 ResultSet resultSetMaxEffect = statement.executeQuery("SELECT effect.course_id, effect.employee_id, MAX(effect) " +
-                        "FROM effect WHERE effect = (SELECT MAX(effect) FROM effect)");
+                        "FROM effect WHERE effect = (SELECT  MAX(effect) FROM effect WHERE effect >= 0)");
 
                 resultSetMaxEffect.next();
                 course_id = resultSetMaxEffect.getInt("course_id");
                 employee_id = resultSetMaxEffect.getInt("employee_id");
                 effect = resultSetMaxEffect.getDouble("MAX(effect)");
 
-                if (effect == -1) {
+                if (effect == -1 || employee_id == 0 || course_id == 0) {
                     return;
                 }
 
@@ -453,6 +434,18 @@ public class CalculationForDB {
                 ResultSet resultSetMaxCourse = statement.executeQuery(queryMaxCourse);
 
                 resultSetMaxCourse.next();
+
+                String countCourseSQL = "SELECT COUNT(*) FROM visitation WHERE course_id = " + course_id + ";";
+                Statement statementCountCourse = dbWorker.getConnection().createStatement();
+                ResultSet resultSetCountCourse = statementCountCourse.executeQuery(countCourseSQL);
+                resultSetCountCourse.next();
+                numberOnCourse = resultSetCountCourse.getInt("COUNT(*)");
+                if (numberOnCourse >= maxNumberOnCourse) {
+                    closeEffect(dbWorker);
+                    continue;
+                }
+
+
                 pc5EndCourse = resultSetMaxCourse.getInt("course_pc5_end");
                 pc6EndCourse = resultSetMaxCourse.getInt("course_pc6_end");
                 pc15EndCourse = resultSetMaxCourse.getInt("course_pc15_end");
@@ -467,7 +460,7 @@ public class CalculationForDB {
                 }
 
 
-                dbWorker = new DBWorker();
+//                dbWorker = new DBWorker();
 
                 Statement statementNumber = dbWorker.getConnection().createStatement();
                 ResultSet resultNumber = statementNumber.executeQuery("SELECT COUNT(DISTINCT employee_id) FROM visitation;");
@@ -478,7 +471,7 @@ public class CalculationForDB {
                     return;
                 }
 
-                dbWorker = new DBWorker();
+//                dbWorker = new DBWorker();
 
                 String queryEmployee = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
                         "COUNT(employee_id) FROM employee_end WHERE employee_id = " + employee_id + " \n" +
@@ -568,6 +561,5 @@ public class CalculationForDB {
 
 
     }
-
 
 }

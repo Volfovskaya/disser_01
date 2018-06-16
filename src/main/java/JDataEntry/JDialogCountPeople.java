@@ -80,17 +80,17 @@ public class JDialogCountPeople extends JFrame {
                     /**
                      * Change method planMaker to get the limit effect
                      */
+//
+//                    CalculationForDB.planMaker(dbWorker,
+//                            Main.budgetMain,
+//                            Main.countPeopleCourseMain,
+//                            Main.countPeopleMain);
 
                     CalculationForDB.planMaker(dbWorker,
                             Main.budgetMain,
                             Main.countPeopleCourseMain,
-                            Main.countPeopleMain);
-
-//                    CalculationForDB.planMaker(dbWorker,
-//                            Main.budgetMain,
-//                            Main.countPeopleCourseMain,
-//                            Main.countPeopleMain,
-//                            "Минимальный критерий");
+                            Main.countPeopleMain,
+                            "Минимальный критерий");
 
 
 
