@@ -30,6 +30,7 @@ public class CalculationForDB {
     private static int numberOnCourse = 0;
 
     private static int increment = 0;
+    private static int sum;
 
 
     public static void clearDynamicTables(DBWorker dbWorker) {
@@ -63,7 +64,6 @@ public class CalculationForDB {
 
                 employee_id = resultSetEmployee.getInt("employee_id");
 
-                String employee_name = resultSetEmployee.getString("employee_name");
 
                 pc5Employee = resultSetEmployee.getInt("employee_pc5");
                 pc6Employee = resultSetEmployee.getInt("employee_pc6");
@@ -74,8 +74,6 @@ public class CalculationForDB {
                 while (resultSetCourse.next()) {
 
                     course_id = resultSetCourse.getInt("course_id");
-
-                    String course_name = resultSetCourse.getString("course_name");
 
                     pc5StartCourse = resultSetCourse.getInt("course_pc5_start");
                     pc6StartCourse = resultSetCourse.getInt("course_pc6_start");
@@ -151,16 +149,6 @@ public class CalculationForDB {
 
     }
 
-    private static void checkEffect(DBWorker dbWorker) throws SQLException {
-        effect = -1;
-        String deleteEffectOfCourse = "UPDATE effect SET effect.effect = ? WHERE effect.course_id = ?;";
-        PreparedStatement preparedStatement = dbWorker.getConnection().prepareStatement(deleteEffectOfCourse);
-        preparedStatement.setDouble(1, effect);
-        preparedStatement.setInt(2, course_id);
-        preparedStatement.executeUpdate();
-
-    }
-
     private static void insertEmployeeEnd(DBWorker dbWorker) throws SQLException {
 
         Statement statementCountEmployeeEnd = dbWorker.getConnection().createStatement();
@@ -214,6 +202,7 @@ public class CalculationForDB {
 
         int counter;
         int maxEffect = 0;
+        sum = 0;
 
         Statement statementStart = dbWorker.getConnection().createStatement();
         Statement statementEnd = dbWorker.getConnection().createStatement();
@@ -227,6 +216,8 @@ public class CalculationForDB {
             pc5start = resultSetEmployeeStart.getInt("employee_pc5");
             pc6start = resultSetEmployeeStart.getInt("employee_pc6");
             pc15start = resultSetEmployeeStart.getInt("employee_pc15");
+
+            sum = sum + pc5start + pc6start + pc15start;
 
             String query;
             query = "SELECT employee_id, employee_pc5, employee_pc6, employee_pc15, \n" +
@@ -301,7 +292,6 @@ public class CalculationForDB {
                 }
 
 
-
                 Statement statementNumber = dbWorker.getConnection().createStatement();
                 ResultSet resultNumber = statementNumber.executeQuery("SELECT COUNT(DISTINCT employee_id) FROM visitation;");
                 resultNumber.next();
@@ -384,14 +374,17 @@ public class CalculationForDB {
 
 
                 increment = calculationLimitMaxEffect(dbWorker);
-                System.out.println("Бюджет: " + budget);
-                System.out.println("Приращение: " + increment);
             }
+
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            System.out.println("Критерий максимизации прироста");
+            System.out.println("Начальная интегральная компетентность: " + sum);
+            System.out.println("Бюджет: " + budget);
+            System.out.println("Приращение: " + increment);
             try {
                 dbWorker.getConnection().close();
             } catch (SQLException e) {
@@ -459,7 +452,6 @@ public class CalculationForDB {
                 }
 
 
-
                 Statement statementNumber = dbWorker.getConnection().createStatement();
                 ResultSet resultNumber = statementNumber.executeQuery("SELECT COUNT(DISTINCT employee_id) FROM visitation;");
                 resultNumber.next();
@@ -538,18 +530,16 @@ public class CalculationForDB {
 
 
                 number++;
-
-
                 increment = calculationLimitMaxEffect(dbWorker);
-                System.out.println("Бюджет: " + budget);
-                System.out.println("Приращение: " + increment);
-            }
 
+
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             System.out.println(string);
+            System.out.println("Начальная интегральная компетентность: " + sum);
             System.out.println("Бюджет: " + budget);
             System.out.println("Приращение: " + increment);
 
