@@ -27,7 +27,7 @@ public class JWelcomeASPRPK extends JFrame {
         this.setVisible(true);
 
 
-        JTextArea jTextMathSet = new JTextArea("Выберите математическую постановку\nзадачи:");
+        JTextArea jTextMathSet = new JTextArea("Выберите критерий оптимальности\nплана:");
         jTextMathSet.setEditable(false);
         jTextMathSet.setBackground(new Color(238, 238, 238));
         this.add(jTextMathSet);
@@ -68,7 +68,7 @@ public class JWelcomeASPRPK extends JFrame {
                 PANEL_BUTTON_SIZE.height);
 
         buttonPanel.setVisible(true);
-        JButton jButtonAcceptMath = new JButton("Принять постановку задачи");
+        JButton jButtonAcceptMath = new JButton("Принять критерий");
         jButtonAcceptMath.setPreferredSize(BUTTON_SIZE);
         this.add(jButtonAcceptMath);
 
